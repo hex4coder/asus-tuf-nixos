@@ -74,7 +74,10 @@
 
 
   # niri
-  programs.niri.enable = true;
+  programs.niri = {
+	enable = true;
+	package = pkgs.niri;
+  };
   
   # thunar
   programs.thunar = {
@@ -133,8 +136,22 @@
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
+  # printing search
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [
+      gutentprint
+      epson-escpr
+      epson-escpr2
+    ];
+  };
 
   # Enable sound.
   # services.pulseaudio.enable = true;
