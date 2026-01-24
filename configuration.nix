@@ -162,13 +162,13 @@
   # Git Config
   programs.git = {
 	enable = true;
-	# settings = {
-	# 	user = {
-	# 		name = "hex4coder";
-	# 		email = "the.programmer.luyo@gmail.com";
-	# 	};
-	# 	init.defaultBranch = "main";
-	# };
+	config = {
+		user = {
+			name = "hex4coder";
+			email = "the.programmer.luyo@gmail.com";
+		};
+		init.defaultBranch = "main";
+	};
 
   };
 
