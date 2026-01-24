@@ -297,7 +297,7 @@
   hardware.enableAllFirmware = true;
   hardware.bluetooth = {
     enable = true;
-    powerOnBoot = true; # Nyalakan otomatis saat boot
+    powerOnBoot = false; # Matikan otomatis saat boot
     settings = {
       General = {
         Enable = "Source,Sink,Media,Socket";
