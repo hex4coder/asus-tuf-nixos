@@ -26,6 +26,8 @@
 	"nvidia_drm.fbdev=1"
 	"nvidia.NVreg_PreserveVideoMemoryAllocations=1"
   ];
+  boot.kernelModules = ["acpi_call"];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 
   # networking
   networking.nameservers = [ "8.8.8.8" ];
@@ -117,6 +119,10 @@
 	compositor.name = "niri";
 	package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
   };
+
+  # baterai
+  services.upower.enable = true;
+
 
   # dms shell
   systemd.user.services.niri-flake-polkit.enable = false;
