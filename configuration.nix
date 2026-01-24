@@ -258,7 +258,7 @@
      brightnessctl
      wireplumber
      asusctl
-     rog-control-center
+     #rog-control-center
      libsForQt5.qt5.qtwayland
 
      #icon themes
