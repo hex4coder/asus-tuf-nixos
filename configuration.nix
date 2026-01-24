@@ -25,7 +25,7 @@
 	"nvidia_drm.modeset=1"
 	"nvidia_drm.fbdev=1"
 	"nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-	"acpi_backlight=vendor"
+#	"acpi_backlight=vendor"
 	"nvidia.NVreg_EnableS0ixPowerManagement=1"
   ];
   boot.kernelModules = ["acpi_call"];
