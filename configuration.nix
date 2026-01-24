@@ -194,6 +194,7 @@
      asusctl
 
      #icon themes
+     bibata-cursors
      papirus-icon-theme
      tela-icon-theme
      adwaita-icon-theme
