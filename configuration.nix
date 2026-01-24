@@ -186,6 +186,7 @@
   services.printing = {
     enable = true;
     drivers = with pkgs; [
+      cups-pdf
       gutenprint
       epson-escpr
       epson-escpr2
