@@ -17,8 +17,16 @@
   # flakes
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
+  # auto remove history
+  nix.gc = {
+    automatic = true;
+    dates = "weekly"; # Bisa diubah ke "daily" jika ingin setiap hari
+    options = "--delete-older-than 30d"; # Hapus yang lebih tua dari 30 hari
+  };
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 5; # untuk limit history UI 5 saja
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [
@@ -212,6 +220,7 @@
 	firefox
 	google-chrome
 	antigravity
+	rustdesk
      ];
   };
 
