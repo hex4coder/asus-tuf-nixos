@@ -25,7 +25,8 @@
   # networking
   networking.nameservers = [ "8.8.8.8" ];
   networking.hostName = "nixos"; # Define your hostname.
-
+  services.dnsmasq.resolveLocalQueries = false;
+  
   # unfree software
   nixpkgs.config.allowUnfree = true;
 
@@ -74,6 +75,18 @@
 
   # niri
   programs.niri.enable = true;
+  
+  # thunar
+  programs.thunar = {
+	enable = true;
+	plugins = with pkgs.xfce; [
+		thunar-archive-plugin
+		thunar-volman
+	];
+  };
+  programs.xfconf.enable = true;
+  services.gvfs.enable = true;
+  services.tumbler.enable = true;
 
   # greeter
   services.displayManager.dms-greeter = {
@@ -163,12 +176,9 @@
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
      wget
      neovim
      curl
-     alacritty
-
 
      nvtopPackages.full
 
@@ -181,6 +191,8 @@
      wireplumber
      asusctl
      
+     #apps
+     onlyoffice-desktopeditors
   ];
 
   # asus
