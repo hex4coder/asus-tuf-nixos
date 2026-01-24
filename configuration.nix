@@ -185,8 +185,8 @@
   # Enable CUPS to print documents.
   services.printing = {
     enable = true;
+    cups-pdf.enable = true;
     drivers = with pkgs; [
-      cups-pdf
       gutenprint
       epson-escpr
       epson-escpr2
