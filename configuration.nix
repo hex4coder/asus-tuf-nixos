@@ -147,9 +147,9 @@
   services.printing = {
     enable = true;
     drivers = with pkgs; [
-      "gutentprint"
-      "epson-escpr"
-      "epson-escpr2"
+      gutenprint
+      epson-escpr
+      epson-escpr2
     ];
   };
 
