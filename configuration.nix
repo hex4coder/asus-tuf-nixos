@@ -184,7 +184,8 @@
 
      fuzzel
      ghostty
-     xwayland     
+     xwayland
+     xwayland-satellite
      wl-clipboard
 
      brightnessctl
