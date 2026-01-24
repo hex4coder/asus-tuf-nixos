@@ -194,11 +194,14 @@
 
      #icon themes
      papirus-icon-theme
-     gnome-tweaks
-     
+     tela-icon-theme
+     adwaita-icon-theme
+     nwg-look 
      #apps
      onlyoffice-desktopeditors
   ];
+
+  programs.dconf.enable = true;
 
   # asus
   services.asusd.enable = true;
