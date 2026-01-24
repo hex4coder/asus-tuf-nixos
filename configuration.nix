@@ -192,13 +192,21 @@
      pulse.enable = true;
   };
 
+  # docker virtualizations
+  virtualisation.docker = {
+	enable = true;
+	enableNvidia = true;
+	enableOnBoot = true;
+  };
+
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.kaco = {
      isNormalUser = true;
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+     description = "Kaco Jirris";
+     extraGroups = [ "wheel" "networkmanager" "docker" ]; # Enable ‘sudo’ for the user.
      packages = with pkgs; [
        	tree
 	firefox
