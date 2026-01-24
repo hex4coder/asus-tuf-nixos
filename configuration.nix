@@ -21,6 +21,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # networking
+  networking.nameservers = [ "8.8.8.8" ];
   networking.hostName = "nixos"; # Define your hostname.
 
   # unfree software
