@@ -191,6 +191,10 @@
      brightnessctl
      wireplumber
      asusctl
+
+     #icon themes
+     papirus-icon-theme
+     gnome-tweaks
      
      #apps
      onlyoffice-desktopeditors
