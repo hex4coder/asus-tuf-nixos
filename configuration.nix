@@ -274,6 +274,10 @@
   programs.dconf.enable = true;
 
   # asus
+  programs.rog-control-center = {
+	enable = true;
+	autoStart = true;
+  };
   services.supergfxd.enable = true;
   services.asusd.enable = true;
   services.asusd.enableUserService = true;
