@@ -293,6 +293,22 @@
 
   # List services that you want to enable:
 
+  # 1. Aktifkan Hardware Bluetooth
+  hardware.enableAllFirmware = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true; # Nyalakan otomatis saat boot
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+      };
+    };
+  };
+
+  # 2. GUI Manager (PENTING untuk Niri)
+  services.blueman.enable = true;
+
+
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
