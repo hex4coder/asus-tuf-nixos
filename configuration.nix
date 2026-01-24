@@ -154,6 +154,7 @@
      packages = with pkgs; [
        	tree
 	firefox
+	google-chrome
 	antigravity
      ];
   };
