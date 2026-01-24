@@ -21,6 +21,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelParams = [
+	"nvidia_drm.modeset=1"
+	"nvidia_drm.fbdev=1"
+	"nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+  ];
 
   # networking
   networking.nameservers = [ "8.8.8.8" ];
@@ -61,6 +66,7 @@
 
   hardware.graphics = {
    enable = true;
+   enable32Bit = true;
   };
 
   # systems envs
@@ -70,6 +76,20 @@
    LIBVA_DRIVER_NAME = "nvidia";
    WLR_NO_HARDWARE_CURSORS = "1";
    MOZ_ENABLE_WAYLAND = "1";
+   NIXOS_OZONE_WL = "1";
+  };
+
+  #auto cpu freq
+  services.auto-cpufreq.enable = true;
+  services.auto-cpufreq.settings = {
+   battery = {
+      governor = "powersave";
+      turbo = "never";
+   };
+   charger = {
+      governor = "performance";
+      turbo = "auto";
+   };
   };
 
 
