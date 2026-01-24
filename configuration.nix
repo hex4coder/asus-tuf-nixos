@@ -25,9 +25,13 @@
 	"nvidia_drm.modeset=1"
 	"nvidia_drm.fbdev=1"
 	"nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+	"acpi_backlight=vendor"
+	"nvidia.NVreg_EnableS0ixPowerManagement=1"
   ];
   boot.kernelModules = ["acpi_call"];
   boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
+  #suspend fix
+  boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
 
   # networking
   networking.nameservers = [ "8.8.8.8" ];
@@ -61,7 +65,7 @@
   hardware.nvidia = {
    modesetting.enable = true;
    powerManagement.enable = true;
-   open = false;
+   open = true;
    nvidiaSettings = true;
    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
