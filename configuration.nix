@@ -187,6 +187,7 @@
      xwayland
      xwayland-satellite
      wl-clipboard
+     wl-mirror
 
      brightnessctl
      wireplumber
