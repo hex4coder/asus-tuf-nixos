@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
+    nixos-hardware = {
+	url = "github:NixOS/nixos-hardware/master";
+	inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     dms = {
 	url = "github:AvengeMedia/DankMaterialShell/stable";
 	inputs.nixpkgs.follows = "nixpkgs";
@@ -31,7 +36,7 @@
 		specialArgs = { inherit inputs; };
 		modules = [
 			./configuration.nix
-
+			inputs.nixos-hardware.nixosModules.asus-tuf-a15
 		];
 	};
   };
