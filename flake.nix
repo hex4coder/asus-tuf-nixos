@@ -36,7 +36,7 @@
 		specialArgs = { inherit inputs; };
 		modules = [
 			./configuration.nix
-			inputs.nixos-hardware.nixosModules.asus-tuf-a15
+			inputs.nixos-hardware.nixosModules.asus-fa506iv
 		];
 	};
   };
