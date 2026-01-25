@@ -255,6 +255,7 @@
      ghostty
      xwayland
      xwayland-satellite
+    gsettings-desktop-schemas
      wl-clipboard
      wl-mirror
 
@@ -339,9 +340,6 @@
     };
   };
   
-  # Tambahkan schema gsettings agar dialog GTK tidak crash karena tema
-  environment.systemPackages = [ pkgs.gsettings-desktop-schemas ];
-
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
