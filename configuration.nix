@@ -223,6 +223,7 @@
 	      antigravity
 	      rustdesk
 	      fastfetch
+        signal-desktop
      ];
   };
 
