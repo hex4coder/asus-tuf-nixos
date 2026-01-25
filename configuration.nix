@@ -311,6 +311,38 @@
   services.blueman.enable = true;
 
 
+
+
+
+
+  # portal gtk
+  xdg.portal = {
+    enable = true;
+    
+    # 1. Instal backend portal
+    # 'xdg-desktop-portal-gtk' adalah yang paling ringan dan kompatibel untuk file picker
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-gnome # Opsional, jika butuh fitur GNOME spesifik
+    ];
+
+    # 2. Konfigurasi Mapping (PENTING)
+    # Ini memberitahu sistem: "Saat di Niri, gunakan portal GTK untuk dialog file"
+    config = {
+      niri = {
+        default = [ "gtk" ];
+      };
+      # Fallback agar aman untuk semua sesi
+      common = {
+        default = [ "gtk" ];
+      };
+    };
+  };
+  
+  # Tambahkan schema gsettings agar dialog GTK tidak crash karena tema
+  environment.systemPackages = [ pkgs.gsettings-desktop-schemas ];
+
+
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
