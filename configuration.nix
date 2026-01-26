@@ -467,7 +467,7 @@
       gstp = "git stash pop";
 
       # for nix os rebuild
-      ncb = "nixos-rebuild switch --impure --flake --upgrade --sudo";
+      ncb = "sudo nixos-rebuild switch --impure --flake --upgrade";
 	};
   };
 
