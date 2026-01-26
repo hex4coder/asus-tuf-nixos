@@ -91,6 +91,7 @@
    WLR_NO_HARDWARE_CURSORS = "1";
    MOZ_ENABLE_WAYLAND = "1";
    NIXOS_OZONE_WL = "1";
+   NIXPKGS_ALLOW_INSECURE = "1";
   };
 
   #auto cpu freq
