@@ -207,7 +207,7 @@
   # qemukvm
   # Enable virtualization
   virtualisation.libvirtd.enable = true;
-  virtualisation.libvirtd.qemu.ovmf.enable = true; # For UEFI support
+  #virtualisation.libvirtd.qemu.ovmf.enable = true; # For UEFI support
   virtualisation.libvirtd.qemu.runAsRoot = false;
 
 
