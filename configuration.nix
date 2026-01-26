@@ -117,10 +117,6 @@
   # thunar
   programs.thunar = {
 	enable = true;
-	plugins = with pkgs.xfce; [
-		thunar-archive-plugin
-		thunar-volman
-	];
   };
   programs.xfconf.enable = true;
   services.gvfs.enable = true;
@@ -272,9 +268,11 @@
      ghostty
      xwayland
      xwayland-satellite
-    gsettings-desktop-schemas
+     gsettings-desktop-schemas
      wl-clipboard
      wl-mirror
+     thunar-archive-plugin
+     thunar-volman
 
      brightnessctl
      wireplumber
