@@ -226,6 +226,7 @@
      extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "kvm" "ubridge" "gns3"]; 
      packages = with pkgs; [
      	peazip
+	tigervnc
        	tree
 	      firefox
 	      google-chrome
