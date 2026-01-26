@@ -444,7 +444,7 @@
       gaa = "git add --all";
       
       # Commit
-      gc = "git commit -m";
+      gc = "git commit -am";
       gca = "git commit --amend";
       
       # Push & Pull
@@ -465,7 +465,7 @@
       gstp = "git stash pop";
 
       # for nix os rebuild
-      ncb = "nixos-rebuild switch --impure --flake --upgrade"
+      ncb = "nixos-rebuild switch --impure --flake --upgrade";
 	};
   };
 
