@@ -209,6 +209,13 @@
 	enableOnBoot = true;
   };
 
+  # for VBOX
+  virtualisation.virtualbox.host = {
+	enable = true;
+	enableExtensionPack = true;
+  };
+  users.extraGroups.vboxusers.members = [ "kaco" ];
+
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
