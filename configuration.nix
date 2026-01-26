@@ -237,6 +237,7 @@
 	gns3-server
 	dynamips
 	vpcs
+	xterm
      ];
   };
 
