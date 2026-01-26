@@ -290,6 +290,9 @@
      gns3-server
   ];
 
+  # for gns3 server service
+  services.gns3-server.enable = true;
+
   programs.dconf.enable = true;
 
   # asus
