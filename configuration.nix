@@ -221,7 +221,7 @@
   users.users.kaco = {
      isNormalUser = true;
      description = "Kaco Jirris";
-     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" ]; # Enable ‘sudo’ for the user.
+     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "kvm" "ubridge" ]; 
      packages = with pkgs; [
        	tree
 	      firefox
@@ -294,14 +294,18 @@
 
 
      # for student in tjkt
-     gns3-server
      virt-manager
      qemu_kvm
      dnsmasq
   ];
 
   # for gns3 server service
-  services.gns3-server.enable = true;
+  services.gns3-server = {
+	enable = true;
+	ubridge.enable = true;
+	vpcs.enable = true;
+	dynamips.enable = true;
+  };
 
   programs.dconf.enable = true;
 
