@@ -270,6 +270,7 @@
      curl
 
      nvtopPackages.full
+     inetutils
 
      fuzzel
      ghostty
