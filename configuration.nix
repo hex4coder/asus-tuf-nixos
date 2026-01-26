@@ -234,6 +234,9 @@
 	ventoy-full
 	zoom-us
 	gns3-gui
+	gns3-server
+	dynamips
+	vpcs
      ];
   };
 
@@ -300,20 +303,20 @@
   ];
 
   # for gns3 server service
-  services.gns3-server = {
-	enable = true;
-	ubridge.enable = true;
-	vpcs.enable = true;
-	dynamips.enable = true;
+	#  services.gns3-server = {
+	# enable = false;
+	# ubridge.enable = true;
+	# vpcs.enable = true;
+	# dynamips.enable = true;
+	#  };
+  security.wrappers.ubridge = {
+    source = "${pkgs.ubridge}/bin/ubridge";
+    capabilities = "cap_net_admin,cap_net_raw=ep";
+    owner = "root";
+    group = "ubridge";
+    permissions = "u+rx,g+x";
   };
-  # security.wrappers.ubridge = {
-  #   source = "${pkgs.ubridge}/bin/ubridge";
-  #   capabilities = "cap_net_admin,cap_net_raw=ep";
-  #   owner = "root";
-  #   group = "ubridge";
-  #   permissions = "u+rx,g+x";
-  # };
-  #
+
   programs.dconf.enable = true;
 
   # asus
