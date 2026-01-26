@@ -428,5 +428,46 @@
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.11"; # Did you read the comment?
 
+
+
+  # for bash
+  programs.bash = {
+	enable = true;
+	completion.enable = true;
+	shellAliases = {
+# Shortcut dasar
+      g = "git";
+      
+      # Status & Add
+      gs = "git status";
+      ga = "git add";
+      gaa = "git add --all";
+      
+      # Commit
+      gc = "git commit -m";
+      gca = "git commit --amend";
+      
+      # Push & Pull
+      gp = "git push";
+      gl = "git pull";
+      
+      # Branch & Checkout
+      gb = "git branch";
+      gco = "git checkout";
+      gcb = "git checkout -b"; # Buat branch baru dan pindah
+      
+      # Diff & Log
+      gd = "git diff";
+      glog = "git log --oneline --decorate --graph"; # Log yang rapi
+      
+      # Stash
+      gsta = "git stash push";
+      gstp = "git stash pop";
+
+      # for nix os rebuild
+      ncb = "nixos-rebuild switch --impure --flake --upgrade"
+	};
+  };
+
 }
 
