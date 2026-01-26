@@ -228,6 +228,7 @@
 	unzip
 	ventoy-full
 	zoom-us
+	gns3-gui
      ];
   };
 
@@ -277,6 +278,10 @@
      nwg-look 
      #apps
      onlyoffice-desktopeditors
+
+
+     # for student in tjkt
+     gns3-server
   ];
 
   programs.dconf.enable = true;
