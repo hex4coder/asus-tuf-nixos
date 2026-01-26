@@ -224,6 +224,8 @@
 	      rustdesk
 	      fastfetch
         signal-desktop
+	unzip
+	ventoy-full
      ];
   };
 
