@@ -225,6 +225,7 @@
      description = "Kaco Jirris";
      extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "kvm" "ubridge" "gns3"]; 
      packages = with pkgs; [
+     	peazip
        	tree
 	      firefox
 	      google-chrome
