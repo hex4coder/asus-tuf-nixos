@@ -44,6 +44,7 @@
   # networking
   networking.nameservers = [ "8.8.8.8" ];
   networking.hostName = "nixos"; # Define your hostname.
+
   services.dnsmasq.resolveLocalQueries = false;
   
   # unfree software
@@ -137,7 +138,7 @@
   systemd.user.services.niri-flake-polkit.enable = false;
   programs.dank-material-shell = {
 	enable = true;
-	dgop.package = inputs.dgop.packages.${pkgs.system}.default;
+	dgop.package = inputs.dgop.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
 	# niri = {
 	# 	includes = {
@@ -209,6 +210,8 @@
   virtualisation.libvirtd.enable = true;
   #virtualisation.libvirtd.qemu.ovmf.enable = true; # For UEFI support
   virtualisation.libvirtd.qemu.runAsRoot = false;
+  programs.virt-manager.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
 
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -294,6 +297,7 @@
      gns3-server
      virt-manager
      qemu_kvm
+     dnsmasq
   ];
 
   # for gns3 server service
