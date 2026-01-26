@@ -226,6 +226,7 @@
         signal-desktop
 	unzip
 	ventoy-full
+	zoom-us
      ];
   };
 
