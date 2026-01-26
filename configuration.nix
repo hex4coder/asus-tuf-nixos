@@ -205,16 +205,15 @@
   # docker virtualizations
   virtualisation.docker = {
 	enable = true;
-	enableNvidia = true;
 	enableOnBoot = true;
   };
 
-  # for VBOX
-  virtualisation.virtualbox.host = {
-	enable = true;
-	enableExtensionPack = true;
-  };
-  users.extraGroups.vboxusers.members = [ "kaco" ];
+  # qemukvm
+  # Enable virtualization
+  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd.qemu.ovmf.enable = true; # For UEFI support
+  virtualisation.libvirtd.qemu.runAsRoot = false;
+
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
@@ -223,7 +222,7 @@
   users.users.kaco = {
      isNormalUser = true;
      description = "Kaco Jirris";
-     extraGroups = [ "wheel" "networkmanager" "docker" ]; # Enable ‘sudo’ for the user.
+     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" ]; # Enable ‘sudo’ for the user.
      packages = with pkgs; [
        	tree
 	      firefox
@@ -295,6 +294,8 @@
 
      # for student in tjkt
      gns3-server
+     virt-manager
+     qemu_kvm
   ];
 
   # for gns3 server service
