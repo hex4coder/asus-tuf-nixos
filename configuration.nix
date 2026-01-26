@@ -202,6 +202,7 @@
   # docker virtualizations
   virtualisation.docker = {
 	enable = true;
+	enableNvidia = true;
 	enableOnBoot = true;
   };
   hardware.nvidia-container-toolkit.enable = true;
