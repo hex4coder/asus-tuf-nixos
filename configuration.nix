@@ -232,6 +232,12 @@
      ];
   };
 
+
+  # for ventoy
+  nixpkgs.config.permittedInsecurePackages = [
+                "ventoy-1.1.10"
+              ];
+
   # Git Config
   programs.git = {
 	enable = true;
