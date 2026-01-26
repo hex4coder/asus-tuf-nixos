@@ -221,7 +221,7 @@
   users.users.kaco = {
      isNormalUser = true;
      description = "Kaco Jirris";
-     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "kvm" "ubridge" ]; 
+     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "kvm" "ubridge" "gns3"]; 
      packages = with pkgs; [
        	tree
 	      firefox
@@ -305,6 +305,13 @@
 	ubridge.enable = true;
 	vpcs.enable = true;
 	dynamips.enable = true;
+  };
+  security.wrappers.ubridge = {
+    source = "${pkgs.ubridge}/bin/ubridge";
+    capabilities = "cap_net_admin,cap_net_raw=ep";
+    owner = "root";
+    group = "ubridge";
+    permissions = "u+rx,g+x";
   };
 
   programs.dconf.enable = true;
