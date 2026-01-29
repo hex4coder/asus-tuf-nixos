@@ -242,6 +242,7 @@
 	dynamips
 	vpcs
 	xterm
+	obs-studio
      ];
   };
 
