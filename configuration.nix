@@ -74,7 +74,7 @@
   hardware.nvidia = {
    modesetting.enable = true;
    powerManagement.enable = true;
-   open = true;
+   open = false;
    nvidiaSettings = true;
    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
@@ -255,6 +255,9 @@
 		obs-vkcapture
 		obs-pipewire-audio-capture
 	];
+	package = pkgs.obs-studio.override {
+		cudaSupport = true;
+	};
   };
 
   # for ventoy
@@ -379,7 +382,7 @@
   # portal gtk
   xdg.portal = {
     enable = true;
-    xdgOpenUsePortal = true; # Paksa xdg-open pakai portal
+    #xdgOpenUsePortal = true; # Paksa xdg-open pakai portal
     
     # 1. Instal backend portal
     # 'xdg-desktop-portal-gtk' adalah yang paling ringan dan kompatibel untuk file picker
@@ -392,7 +395,9 @@
     # Ini memberitahu sistem: "Saat di Niri, gunakan portal GTK untuk dialog file"
     config = {
       niri = {
-        default = [ "gtk" ];
+        default = [ "gnome" "gtk" ];
+	"org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
+        "org.freedesktop.impl.portal.Screenshot" = [ "gnome" ];
       };
       # Fallback agar aman untuk semua sesi
       common = {
@@ -406,6 +411,7 @@
     GTK_USE_PORTAL = "1";
     # Kadang Electron butuh tahu dia dianggap "GNOME" agar mau pakai portal
     XDG_CURRENT_DESKTOP = "niri"; 
+    OBS_USE_EGL = "1";
   };
 
   # Enable the OpenSSH daemon.
