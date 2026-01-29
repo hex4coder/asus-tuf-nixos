@@ -212,7 +212,7 @@
   virtualisation.libvirtd = {
 	enable = true;
 	qemu = {
-		runAsRoot = false;
+		runAsRoot = true;
 		verbatimConfig = ''
 			user = "kaco"
 			group = "libvirtd"
