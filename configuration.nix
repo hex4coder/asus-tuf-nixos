@@ -251,6 +251,14 @@
 	dynamips
 	vpcs
 	xterm
+
+
+	# DKV
+	gimp
+	blender
+	krita
+	inkscape
+	kdePackages.kdenlive
      ];
   };
 
