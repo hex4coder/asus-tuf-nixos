@@ -262,6 +262,16 @@
      ];
   };
 
+  # untuk kdenlive
+  nixpkgs.overlays = [
+    (self: super: {
+      kdenlive = super.kdenlive.overrideAttrs (oldAttrs: {
+        # Kita tambahkan shaderc ke dalam buildInputs secara paksa
+        buildInputs = oldAttrs.buildInputs ++ [ self.shaderc ];
+      });
+    })
+  ];
+
   # for obs-studio
   programs.obs-studio = {
 	enable = true;
