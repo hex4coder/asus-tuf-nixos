@@ -233,6 +233,7 @@
      description = "Kaco Jirris";
      extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "kvm" "ubridge" "gns3"]; 
      packages = with pkgs; [
+     	vlc
      	peazip
 	tigervnc
        	tree
