@@ -209,9 +209,17 @@
 
   # qemukvm
   # Enable virtualization
-  virtualisation.libvirtd.enable = true;
-  #virtualisation.libvirtd.qemu.ovmf.enable = true; # For UEFI support
-  virtualisation.libvirtd.qemu.runAsRoot = false;
+  virtualisation.libvirtd = {
+	enable = true;
+	qemu = {
+		runAsRoot = false;
+		verbatimConfig = ''
+			user = "kaco"
+			group = "libvirtd"
+			dynamic_ownership = 0
+		'';
+	};
+  };
   programs.virt-manager.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
 
