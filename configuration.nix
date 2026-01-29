@@ -242,10 +242,20 @@
 	dynamips
 	vpcs
 	xterm
-	obs-studio
      ];
   };
 
+  # for obs-studio
+  programs.obs-studio = {
+	enable = true;
+	enableVirtualCamera = true;
+	plugins = with pkgs; [
+		wlrobs
+		obs-vaapi
+		obs-vkcapture
+		obs-pipewire-audio-capture
+	];
+  };
 
   # for ventoy
   nixpkgs.config.permittedInsecurePackages = [
