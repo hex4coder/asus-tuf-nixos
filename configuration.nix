@@ -408,7 +408,7 @@
   # portal gtk
   xdg.portal = {
     enable = true;
-    #xdgOpenUsePortal = true; # Paksa xdg-open pakai portal
+    xdgOpenUsePortal = true; # Paksa xdg-open pakai portal
     
     # 1. Instal backend portal
     # 'xdg-desktop-portal-gtk' adalah yang paling ringan dan kompatibel untuk file picker
