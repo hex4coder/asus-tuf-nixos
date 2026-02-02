@@ -258,7 +258,7 @@
 	blender
 	krita
 	inkscape
-	kdePackages.kdenlive
+	#kdePackages.kdenlive
      ];
   };
 
@@ -312,6 +312,7 @@
      wget
      neovim
      curl
+     jq
 
      nvtopPackages.full
      inetutils
@@ -414,7 +415,8 @@
     # 'xdg-desktop-portal-gtk' adalah yang paling ringan dan kompatibel untuk file picker
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
-      xdg-desktop-portal-gnome # Opsional, jika butuh fitur GNOME spesifik
+      xdg-desktop-portal-gnome 
+      # Opsional, jika butuh fitur GNOME spesifik
     ];
 
     # 2. Konfigurasi Mapping (PENTING)
@@ -422,12 +424,13 @@
     config = {
       niri = {
         default = [ "gnome" "gtk" ];
-	"org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
-        "org.freedesktop.impl.portal.Screenshot" = [ "gnome" ];
+	#"org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
+        #"org.freedesktop.impl.portal.Screenshot" = [ "gnome" ];
       };
       # Fallback agar aman untuk semua sesi
       common = {
-        default = [ "gtk" ];
+        default = [ "*" ];
+        #default = [ "gtk" ];
       };
     };
   };
@@ -437,6 +440,7 @@
     GTK_USE_PORTAL = "1";
     # Kadang Electron butuh tahu dia dianggap "GNOME" agar mau pakai portal
     XDG_CURRENT_DESKTOP = "niri"; 
+    XDG_SESSION_TYPE = "wayland";
     OBS_USE_EGL = "1";
   };
 
