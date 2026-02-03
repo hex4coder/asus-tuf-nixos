@@ -8,11 +8,11 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./network.nix
       /etc/nixos/hardware-configuration.nix
       inputs.dms.nixosModules.dank-material-shell
       inputs.dms-plugin-registry.modules.default
       inputs.niri.nixosModules.niri
+      ./network.nix
     ];
 
   # flakes
