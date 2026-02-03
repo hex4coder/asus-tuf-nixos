@@ -13,6 +13,7 @@
       inputs.dms-plugin-registry.modules.default
       inputs.niri.nixosModules.niri
       ./network.nix
+      ./samba.nix
     ];
 
   # flakes
