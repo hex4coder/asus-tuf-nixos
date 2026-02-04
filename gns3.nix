@@ -3,56 +3,60 @@
 let
   autoVersion = src: "3.0.6-unstable-${src.lastModifiedDate or "latest"}";
   
-  # Daftar dependensi lengkap untuk GNS3 v3
-  gns3Deps = with pkgs.python3Packages; [
+  # Dependensi untuk GUI
+  gns3GuiDeps = with pkgs.python3Packages; [
     sip
     pyqt5
     setuptools
     psutil
     jsonschema
     distutils
-    sentry-sdk    # Baru ditambahkan
-    truststore    # Baru ditambahkan
+    sentry-sdk
+    truststore
     distro
     setuptools-scm
+  ];
+
+  # Dependensi untuk Server (Berdasarkan error log Anda)
+  gns3ServerDeps = with pkgs.python3Packages; [
+    setuptools
+    aiohttp
+    aiofiles        # Baru
+    jinja2          # Baru
+    async-timeout   # Baru
+    distro          # Baru
+    py-cpuinfo      # Baru (biasanya dipanggil cpuinfo di python)
+    platformdirs    # Baru
+    truststore      # Baru
+    jsonschema
+    psutil
+    sentry-sdk
   ];
 
 in {
   users.users.kaco = {
     packages = [
+      # Override GUI
       (pkgs.gns3-gui.overrideAttrs (old: {
         version = autoVersion gns3-gui-src;
         src = gns3-gui-src;
-
-        propagatedBuildInputs = gns3Deps;
-
-        # Bypass checks agar build tidak berhenti karena masalah lingkungan sandbox
+        propagatedBuildInputs = gns3GuiDeps;
         doCheck = false;
         doInstallCheck = false;
         dontUsePytestCheck = true;
         pythonImportsCheck = [ ];
-
-        nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
-          pkgs.qt5.wrapQtAppsHook 
-        ];
+        nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.qt5.wrapQtAppsHook ];
       }))
 
+      # Override Server
       (pkgs.gns3-server.overrideAttrs (old: {
         version = autoVersion gns3-server-src;
         src = gns3-server-src;
-        
+        propagatedBuildInputs = gns3ServerDeps; # Menggunakan list lengkap di atas
         doCheck = false;
         doInstallCheck = false;
         dontUsePytestCheck = true;
         pythonImportsCheck = [ ];
-
-        propagatedBuildInputs = (with pkgs.python3Packages; [
-          setuptools
-          aiohttp
-          jsonschema
-          psutil
-          sentry-sdk # Server juga butuh sentry biasanya
-        ]);
       }))
 
       pkgs.ubridge
