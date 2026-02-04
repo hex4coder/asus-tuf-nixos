@@ -11,6 +11,9 @@ let
     jsonschema
     distutils
     raven
+    distro
+    truststore
+    sentry-sdk
   ]); 
   # Definisikan paket custom agar kode di bawah lebih rapi
   myGns3Gui = pkgs.gns3-gui.overrideAttrs (old: {
@@ -29,6 +32,9 @@ let
         jsonschema
         distutils
         raven
+    distro
+    truststore
+    sentry-sdk
       ];
 
       # Lewati test yang bikin error 'sip' tadi
