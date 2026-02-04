@@ -29,11 +29,11 @@
     };
 
     gns3-server-src = {
-	src = "github:GNS3/gns3-server/master"; 
+	url = "github:GNS3/gns3-server/master"; 
 	flake = false;
     };
     gns3-gui-src = {
-	src = "github:GNS3/gns3-gui/master"; 
+	url = "github:GNS3/gns3-gui/master"; 
 	flake = false;
     };
   };
