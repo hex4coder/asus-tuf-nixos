@@ -11,7 +11,6 @@ let
     jsonschema
     distutils
     raven
-    resource
     distro
     setuptools-scm
   ];
