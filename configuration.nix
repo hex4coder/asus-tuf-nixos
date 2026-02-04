@@ -358,14 +358,6 @@
 	# vpcs.enable = true;
 	# dynamips.enable = true;
 	#  };
-  users.groups.ubridge = {};
-  security.wrappers.ubridge = {
-    source = "${pkgs.ubridge}/bin/ubridge";
-    capabilities = "cap_net_admin,cap_net_raw=ep";
-    owner = "root";
-    group = "ubridge";
-    permissions = "u+rx,g+x";
-  };
 
   programs.dconf.enable = true;
 

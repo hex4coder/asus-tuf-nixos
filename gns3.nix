@@ -39,4 +39,5 @@ in
   };
 
   users.groups.gns3 = {};
+  users.groups.ubridge = {};
 }
