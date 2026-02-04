@@ -410,6 +410,7 @@
 
   # portal gtk
   services.dbus.enable = true;
+  security.polkit.enable = true;
   xdg.portal = {
     enable = true;
     xdgOpenUsePortal = true; # Paksa xdg-open pakai portal
