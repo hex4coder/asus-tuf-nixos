@@ -27,6 +27,15 @@
 	url = "github:AvengeMedia/dms-plugin-registry";
 	inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    gns3-server-src = {
+	src = "github.com:GNS3/gns3-server/master"; 
+	flake = false;
+    };
+    gns3-gui-src = {
+	src = "github.com:GNS3/gns3-gui/master"; 
+	flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, ... } @ inputs: {
