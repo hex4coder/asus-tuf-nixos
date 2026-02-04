@@ -32,9 +32,9 @@ let
         jsonschema
         distutils
         raven
-    distro
-    truststore
-    sentry-sdk
+        distro
+        truststore
+        sentry-sdk
       ];
 
       # Lewati test yang bikin error 'sip' tadi
