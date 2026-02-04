@@ -3,11 +3,10 @@
 let
   autoVersion = src: "3.0.6-unstable-${src.lastModifiedDate or "latest"}";
   
-  # List paket Python yang lebih spesifik untuk GNS3 v3
   sharedPythonPkgs = with pkgs.python3Packages; [
     sip
     pyqt5
-    pyqt5_sip        # MODUL KRUSIAL: Menyediakan 'sip' yang dicari PyQt5
+    pyqt5-sip        # PERBAIKAN: Gunakan tanda hubung (-) bukan underscore (_)
     setuptools
     psutil
     jsonschema
@@ -24,16 +23,13 @@ let
     platformdirs
   ];
 
-  # Membuat lingkungan Python tunggal yang koheren
   pythonEnv = pkgs.python3.withPackages (ps: sharedPythonPkgs);
 
 in {
   users.users.kaco.packages = [
-    # GNS3 GUI
     (pkgs.gns3-gui.overrideAttrs (old: {
       version = autoVersion gns3-gui-src;
       src = gns3-gui-src;
-      
       propagatedBuildInputs = sharedPythonPkgs;
 
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
@@ -41,7 +37,6 @@ in {
         pkgs.qt5.wrapQtAppsHook 
       ];
 
-      # Memperbaiki cara pembungkusan agar PYTHONPATH lebih absolut
       postFixup = ''
         wrapProgram $out/bin/gns3 \
           --prefix PYTHONPATH : "${pythonEnv}/${pkgs.python3.sitePackages}" \
@@ -53,11 +48,9 @@ in {
       pythonImportsCheck = [ ];
     }))
 
-    # GNS3 Server
     (pkgs.gns3-server.overrideAttrs (old: {
       version = autoVersion gns3-server-src;
       src = gns3-server-src;
-      
       propagatedBuildInputs = sharedPythonPkgs;
 
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.makeWrapper ];
