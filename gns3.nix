@@ -3,10 +3,11 @@
 let
   autoVersion = src: "3.0.6-unstable-${src.lastModifiedDate or "latest"}";
   
+  # Daftar dependensi dasar
   sharedPythonPkgs = with pkgs.python3Packages; [
     sip
     pyqt5
-    pyqt5-sip        # PERBAIKAN: Gunakan tanda hubung (-) bukan underscore (_)
+    pyqt5-sip
     setuptools
     psutil
     jsonschema
@@ -23,48 +24,45 @@ let
     platformdirs
   ];
 
-  pythonEnv = pkgs.python3.withPackages (ps: sharedPythonPkgs);
-
 in {
-  users.users.kaco.packages = [
-    (pkgs.gns3-gui.overrideAttrs (old: {
+  users.users.kaco.packages = let
+    # Definisikan GUI dan Server di sini agar bisa direferensikan oleh pythonEnv
+    myGns3Gui = pkgs.gns3-gui.overrideAttrs (old: {
       version = autoVersion gns3-gui-src;
       src = gns3-gui-src;
       propagatedBuildInputs = sharedPythonPkgs;
-
-      nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
-        pkgs.makeWrapper 
-        pkgs.qt5.wrapQtAppsHook 
-      ];
-
+      nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.makeWrapper pkgs.qt5.wrapQtAppsHook ];
+      
+      # Trik: Tambahkan modul gns3-gui ke PYTHONPATH saat runtime
       postFixup = ''
         wrapProgram $out/bin/gns3 \
-          --prefix PYTHONPATH : "${pythonEnv}/${pkgs.python3.sitePackages}" \
+          --prefix PYTHONPATH : "$out/${pkgs.python3.sitePackages}:${pkgs.python3.withPackages (ps: sharedPythonPkgs)}/${pkgs.python3.sitePackages}" \
           --set QT_QPA_PLATFORM_PLUGIN_PATH "${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins/platforms"
       '';
 
       doCheck = false;
       dontUsePytestCheck = true;
       pythonImportsCheck = [ ];
-    }))
+    });
 
-    (pkgs.gns3-server.overrideAttrs (old: {
+    myGns3Server = pkgs.gns3-server.overrideAttrs (old: {
       version = autoVersion gns3-server-src;
       src = gns3-server-src;
       propagatedBuildInputs = sharedPythonPkgs;
-
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.makeWrapper ];
 
       postFixup = ''
         wrapProgram $out/bin/gns3server \
-          --prefix PYTHONPATH : "${pythonEnv}/${pkgs.python3.sitePackages}"
+          --prefix PYTHONPATH : "$out/${pkgs.python3.sitePackages}:${pkgs.python3.withPackages (ps: sharedPythonPkgs)}/${pkgs.python3.sitePackages}"
       '';
 
       doCheck = false;
       dontUsePytestCheck = true;
       pythonImportsCheck = [ ];
-    }))
-
+    });
+  in [
+    myGns3Gui
+    myGns3Server
     pkgs.ubridge
     pkgs.dynamips
     pkgs.vpcs
