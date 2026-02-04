@@ -425,18 +425,7 @@
 
     # 2. Konfigurasi Mapping (PENTING)
     # Ini memberitahu sistem: "Saat di Niri, gunakan portal GTK untuk dialog file"
-    config = {
-      niri = {
-        default = [ "gnome" "gtk" ];
-	#"org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
-        #"org.freedesktop.impl.portal.Screenshot" = [ "gnome" ];
-      };
-      # Fallback agar aman untuk semua sesi
-      common = {
-        default = [ "*" ];
-        #default = [ "gtk" ];
-      };
-    };
+    config.common.default = "*";
   };
   
   # Set variabel global agar semua aplikasi tahu harus pakai Portal
