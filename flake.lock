@@ -62,6 +62,40 @@
         "type": "github"
       }
     },
+    "gns3-gui-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1770124129,
+        "narHash": "sha256-bg0x9og/itTU3cyFv9yWNl68AyWXgTtgvWn/bsj79V0=",
+        "owner": "GNS3",
+        "repo": "gns3-gui",
+        "rev": "d60908897f200762765d13f33ae1f94ba947a187",
+        "type": "github"
+      },
+      "original": {
+        "owner": "GNS3",
+        "ref": "master",
+        "repo": "gns3-gui",
+        "type": "github"
+      }
+    },
+    "gns3-server-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1769244575,
+        "narHash": "sha256-akA6P/ONPioce4pJbg4wAzSvb7aSYGM8NfCs7q9svic=",
+        "owner": "GNS3",
+        "repo": "gns3-server",
+        "rev": "66db267e27393db44ef7b83db855361a53f1feea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "GNS3",
+        "ref": "master",
+        "repo": "gns3-server",
+        "type": "github"
+      }
+    },
     "niri": {
       "inputs": {
         "niri-stable": "niri-stable",
@@ -195,6 +229,8 @@
         "dgop": "dgop",
         "dms": "dms",
         "dms-plugin-registry": "dms-plugin-registry",
+        "gns3-gui-src": "gns3-gui-src",
+        "gns3-server-src": "gns3-server-src",
         "niri": "niri",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs"
