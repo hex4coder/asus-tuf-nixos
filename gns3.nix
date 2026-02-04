@@ -4,9 +4,10 @@ let
   autoVersion = src: "3.0.6-unstable-${src.lastModifiedDate or "latest"}";
   
   sharedPythonPkgs = with pkgs.python3Packages; [
-    sip
-    pyqt5
-    pyqt5-sip
+    # Ganti PyQt5 ke PyQt6
+    pyqt6
+    pyqt6-sip
+    
     setuptools
     psutil
     jsonschema
@@ -34,14 +35,10 @@ in {
 
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
         pkgs.makeWrapper 
-        pkgs.qt5.wrapQtAppsHook 
+        pkgs.qt6.wrapQtAppsHook # Gunakan hook Qt6
       ];
 
       postFixup = ''
-        # Buat file sitecustomize.py secara dinamis untuk memalsukan modul 'sip'
-        mkdir -p $out/${pkgs.python3.sitePackages}
-        echo "import sys; import PyQt5.sip; sys.modules['sip'] = PyQt5.sip" > $out/${pkgs.python3.sitePackages}/sitecustomize.py
-
         wrapProgram $out/bin/gns3 \
           --set PYTHONPATH "$out/${pkgs.python3.sitePackages}:${pythonEnv}/${pkgs.python3.sitePackages}"
       '';
