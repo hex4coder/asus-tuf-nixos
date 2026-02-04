@@ -3,7 +3,6 @@
 let
   autoVersion = src: "3.0.6-unstable-${src.lastModifiedDate or "latest"}";
   
-  # Daftar dependensi murni agar pengecekan build (hook) lulus
   sharedPythonPkgs = with pkgs.python3Packages; [
     sip
     pyqt5
@@ -24,7 +23,6 @@ let
     platformdirs
   ];
 
-  # Lingkungan terintegrasi untuk runtime
   pythonEnv = pkgs.python3.withPackages (ps: sharedPythonPkgs);
 
 in {
@@ -32,8 +30,6 @@ in {
     myGns3Gui = pkgs.gns3-gui.overrideAttrs (old: {
       version = autoVersion gns3-gui-src;
       src = gns3-gui-src;
-
-      # KUNCI: Masukkan sharedPythonPkgs secara individual di sini agar hook senang
       propagatedBuildInputs = sharedPythonPkgs;
 
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
@@ -41,8 +37,11 @@ in {
         pkgs.qt5.wrapQtAppsHook 
       ];
 
-      # Paksa PYTHONPATH menggunakan 'set' agar tidak ada konflik dengan library luar
       postFixup = ''
+        # Buat file sitecustomize.py secara dinamis untuk memalsukan modul 'sip'
+        mkdir -p $out/${pkgs.python3.sitePackages}
+        echo "import sys; import PyQt5.sip; sys.modules['sip'] = PyQt5.sip" > $out/${pkgs.python3.sitePackages}/sitecustomize.py
+
         wrapProgram $out/bin/gns3 \
           --set PYTHONPATH "$out/${pkgs.python3.sitePackages}:${pythonEnv}/${pkgs.python3.sitePackages}"
       '';
@@ -55,10 +54,7 @@ in {
     myGns3Server = pkgs.gns3-server.overrideAttrs (old: {
       version = autoVersion gns3-server-src;
       src = gns3-server-src;
-      
-      # Sama seperti GUI, masukkan list individual
       propagatedBuildInputs = sharedPythonPkgs;
-
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.makeWrapper ];
 
       postFixup = ''
