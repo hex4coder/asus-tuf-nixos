@@ -3,10 +3,11 @@
 let
   autoVersion = src: "3.0.6-unstable-${src.lastModifiedDate or "latest"}";
   
-  # List paket individual agar mudah dikelola
+  # List paket Python yang lebih spesifik untuk GNS3 v3
   sharedPythonPkgs = with pkgs.python3Packages; [
     sip
     pyqt5
+    pyqt5_sip        # MODUL KRUSIAL: Menyediakan 'sip' yang dicari PyQt5
     setuptools
     psutil
     jsonschema
@@ -23,7 +24,7 @@ let
     platformdirs
   ];
 
-  # Helper untuk PYTHONPATH
+  # Membuat lingkungan Python tunggal yang koheren
   pythonEnv = pkgs.python3.withPackages (ps: sharedPythonPkgs);
 
 in {
@@ -33,7 +34,6 @@ in {
       version = autoVersion gns3-gui-src;
       src = gns3-gui-src;
       
-      # Masukkan individual agar pythonRuntimeDepsCheck senang
       propagatedBuildInputs = sharedPythonPkgs;
 
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
@@ -41,9 +41,11 @@ in {
         pkgs.qt5.wrapQtAppsHook 
       ];
 
-      postInstall = ''
+      # Memperbaiki cara pembungkusan agar PYTHONPATH lebih absolut
+      postFixup = ''
         wrapProgram $out/bin/gns3 \
-          --prefix PYTHONPATH : "${pythonEnv}/${pkgs.python3.sitePackages}"
+          --prefix PYTHONPATH : "${pythonEnv}/${pkgs.python3.sitePackages}" \
+          --set QT_QPA_PLATFORM_PLUGIN_PATH "${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins/platforms"
       '';
 
       doCheck = false;
@@ -60,7 +62,7 @@ in {
 
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.makeWrapper ];
 
-      postInstall = ''
+      postFixup = ''
         wrapProgram $out/bin/gns3server \
           --prefix PYTHONPATH : "${pythonEnv}/${pkgs.python3.sitePackages}"
       '';
@@ -77,7 +79,6 @@ in {
     pkgs.xterm 
   ];
 
-  # Tetap pertahankan konfigurasi security
   security.wrappers.ubridge = {
     source = "${pkgs.ubridge}/bin/ubridge";
     capabilities = "cap_net_admin,cap_net_raw+ep";
