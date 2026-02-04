@@ -1,9 +1,9 @@
 { pkgs, gns3-gui-src, gns3-server-src, ... }:
 
 let
-  autoVersion = src: "unstable-${src.lastModifiedDate or "latest"}";
-
-  pythonEnv = pkgs.python3.withPackages (ps: with ps; [
+  autoVersion = src: "3.0.6-unstable-${src.lastModifiedDate or "latest"}";
+  
+  gns3Deps = with pkgs.python3Packages; [
     sip
     pyqt5
     setuptools
@@ -11,74 +11,67 @@ let
     jsonschema
     distutils
     raven
+    resource
     distro
-    truststore
-    sentry-sdk
-  ]); 
-  # Definisikan paket custom agar kode di bawah lebih rapi
-  myGns3Gui = pkgs.gns3-gui.overrideAttrs (old: {
-    version = autoVersion gns3-gui-src;
-    src = gns3-gui-src;
+    setuptools-scm
+  ];
 
-  # Kita paksa menggunakan buildInputs yang bersih
-      # Tambahkan qt5.wrapQtAppsHook agar aplikasi Qt bisa jalan di NixOS
-      nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.qt5.wrapQtAppsHook ];
-      
-      propagatedBuildInputs = with pkgs.python3Packages; [
-        sip
-        pyqt5
-        setuptools
-        psutil
-        jsonschema
-        distutils
-        raven
-        distro
-        truststore
-        sentry-sdk
-      ];
-
-      # Lewati test yang bikin error 'sip' tadi
-      doCheck = false;
-      
-      # Tambahan jika sip masih tidak terbaca saat runtime
-      makeWrapperArgs = [
-        "--set PYTHONPATH ${pythonEnv}/${pkgs.python3.sitePackages}"
-      ];
-  });
-
-  myGns3Server = pkgs.gns3-server.overrideAttrs (old: {
-    version = autoVersion gns3-server-src;
-    src = gns3-server-src;
-    propagatedBuildInputs = old.propagatedBuildInputs ++ [ pkgs.python3Packages.setuptools ];
-    # GNS3 v3 seringkali menjalankan tes saat build, 
-    # jika tes ini error dan menghambat install, Anda bisa mematikannya sementara:
-    doCheck = false;
-  });
-in
-{
-  # Pindahkan ke sini, bukan environment.systemPackages
+in {
   users.users.kaco = {
     packages = [
-      myGns3Gui
-      myGns3Server
+      # GNS3 GUI dengan Override
+      (pkgs.gns3-gui.overrideAttrs (old: {
+        version = autoVersion gns3-gui-src;
+        src = gns3-gui-src;
+        propagatedBuildInputs = gns3Deps;
+        doCheck = false;
+        doInstallCheck = false;
+        dontUsePytestCheck = true;
+        pythonImportsCheck = [ ];
+        nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
+          pkgs.qt5.wrapQtAppsHook 
+        ];
+      }))
+
+      # GNS3 Server dengan Override
+      (pkgs.gns3-server.overrideAttrs (old: {
+        version = autoVersion gns3-server-src;
+        src = gns3-server-src;
+        doCheck = false;
+        doInstallCheck = false;
+        dontUsePytestCheck = true;
+        pythonImportsCheck = [ ];
+        propagatedBuildInputs = (with pkgs.python3Packages; [
+          setuptools
+          aiohttp
+          jsonschema
+          psutil
+        ]);
+      }))
+
+      # Emulator & Tools
       pkgs.ubridge
       pkgs.dynamips
       pkgs.vpcs
       pkgs.wireshark
-      pkgs.xterm
+      
+      # Terminal Emulator untuk Konsol GNS3
+      pkgs.xterm 
     ];
-    # Pastikan user masuk ke group yang diperlukan
-    extraGroups = [ "gns3" "wireshark" "ubridge" ];
+    
+    extraGroups = [ "gns3" "ubridge" "wireshark" ];
   };
 
-  # Konfigurasi sistem tetap diperlukan (karena butuh izin root/setuid)
+  # Keamanan ubridge
   security.wrappers.ubridge = {
     source = "${pkgs.ubridge}/bin/ubridge";
     capabilities = "cap_net_admin,cap_net_raw+ep";
     owner = "root";
-    group = "gns3";
+    group = "ubridge";
+    permissions = "u+rx,g+x,o=";
   };
 
+  # Definisi Grup
   users.groups.gns3 = {};
   users.groups.ubridge = {};
 }
