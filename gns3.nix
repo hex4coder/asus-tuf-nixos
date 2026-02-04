@@ -3,8 +3,8 @@
 let
   autoVersion = src: "3.0.6-unstable-${src.lastModifiedDate or "latest"}";
   
-  # Dependensi untuk GUI
-  gns3GuiDeps = with pkgs.python3Packages; [
+  # Satukan semua dependensi Python agar versinya sinkron
+  pythonWithDeps = pkgs.python3.withPackages (ps: with ps; [
     sip
     pyqt5
     setuptools
@@ -15,60 +15,66 @@ let
     truststore
     distro
     setuptools-scm
-  ];
-
-  # Dependensi untuk Server (Berdasarkan error log Anda)
-  gns3ServerDeps = with pkgs.python3Packages; [
-    setuptools
     aiohttp
-    aiofiles        # Baru
-    jinja2          # Baru
-    async-timeout   # Baru
-    distro          # Baru
-    py-cpuinfo      # Baru (biasanya dipanggil cpuinfo di python)
-    platformdirs    # Baru
-    truststore      # Baru
-    jsonschema
-    psutil
-    sentry-sdk
-  ];
+    aiofiles
+    jinja2
+    async-timeout
+    py-cpuinfo
+    platformdirs
+  ]);
 
 in {
-  users.users.kaco = {
-    packages = [
-      # Override GUI
-      (pkgs.gns3-gui.overrideAttrs (old: {
-        version = autoVersion gns3-gui-src;
-        src = gns3-gui-src;
-        propagatedBuildInputs = gns3GuiDeps;
-        doCheck = false;
-        doInstallCheck = false;
-        dontUsePytestCheck = true;
-        pythonImportsCheck = [ ];
-        nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.qt5.wrapQtAppsHook ];
-      }))
+  users.users.kaco.packages = [
+    # GNS3 GUI
+    (pkgs.gns3-gui.overrideAttrs (old: {
+      version = autoVersion gns3-gui-src;
+      src = gns3-gui-src;
+      
+      # Gunakan nativeBuildInputs untuk menyertakan makeWrapper
+      nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
+        pkgs.makeWrapper 
+        pkgs.qt5.wrapQtAppsHook 
+      ];
 
-      # Override Server
-      (pkgs.gns3-server.overrideAttrs (old: {
-        version = autoVersion gns3-server-src;
-        src = gns3-server-src;
-        propagatedBuildInputs = gns3ServerDeps; # Menggunakan list lengkap di atas
-        doCheck = false;
-        doInstallCheck = false;
-        dontUsePytestCheck = true;
-        pythonImportsCheck = [ ];
-      }))
+      propagatedBuildInputs = [ pythonWithDeps ];
 
-      pkgs.ubridge
-      pkgs.dynamips
-      pkgs.vpcs
-      pkgs.wireshark
-      pkgs.xterm 
-    ];
-    
-    extraGroups = [ "gns3" "ubridge" "wireshark" ];
-  };
+      # Paksa PYTHONPATH agar menunjuk ke library yang benar saat dijalankan
+      postInstall = ''
+        wrapProgram $out/bin/gns3 \
+          --prefix PYTHONPATH : "${pythonWithDeps}/${pkgs.python3.sitePackages}"
+      '';
 
+      doCheck = false;
+      dontUsePytestCheck = true;
+      pythonImportsCheck = [ ];
+    }))
+
+    # GNS3 Server
+    (pkgs.gns3-server.overrideAttrs (old: {
+      version = autoVersion gns3-server-src;
+      src = gns3-server-src;
+      
+      nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.makeWrapper ];
+      propagatedBuildInputs = [ pythonWithDeps ];
+
+      postInstall = ''
+        wrapProgram $out/bin/gns3server \
+          --prefix PYTHONPATH : "${pythonWithDeps}/${pkgs.python3.sitePackages}"
+      '';
+
+      doCheck = false;
+      dontUsePytestCheck = true;
+      pythonImportsCheck = [ ];
+    }))
+
+    pkgs.ubridge
+    pkgs.dynamips
+    pkgs.vpcs
+    pkgs.wireshark
+    pkgs.xterm 
+  ];
+
+  # Keamanan & Grup tetap sama
   security.wrappers.ubridge = {
     source = "${pkgs.ubridge}/bin/ubridge";
     capabilities = "cap_net_admin,cap_net_raw+ep";
