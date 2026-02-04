@@ -3,8 +3,9 @@
 let
   autoVersion = src: "3.0.6-unstable-${src.lastModifiedDate or "latest"}";
   
-  # Daftar dependensi dasar
-  sharedPythonPkgs = with pkgs.python3Packages; [
+  # Kita buat satu paket Python yang berisi SEMUA dependensi + gns3-gui itu sendiri
+  # Ini trik paling ampuh di NixOS untuk aplikasi Python yang rewel
+  pythonEnv = pkgs.python3.withPackages (ps: with ps; [
     sip
     pyqt5
     pyqt5-sip
@@ -22,22 +23,27 @@ let
     async-timeout
     py-cpuinfo
     platformdirs
-  ];
+  ]);
 
 in {
   users.users.kaco.packages = let
-    # Definisikan GUI dan Server di sini agar bisa direferensikan oleh pythonEnv
     myGns3Gui = pkgs.gns3-gui.overrideAttrs (old: {
       version = autoVersion gns3-gui-src;
       src = gns3-gui-src;
-      propagatedBuildInputs = sharedPythonPkgs;
-      nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.makeWrapper pkgs.qt5.wrapQtAppsHook ];
-      
-      # Trik: Tambahkan modul gns3-gui ke PYTHONPATH saat runtime
+
+      # Gunakan pythonEnv yang sudah kita buat sebagai basis dependensi
+      propagatedBuildInputs = [ pythonEnv ];
+
+      nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
+        pkgs.makeWrapper 
+        pkgs.qt5.wrapQtAppsHook 
+      ];
+
+      # Trik Pamungkas: Kita suntikkan PYTHONPATH ke folder site-packages 
+      # milik pythonEnv yang sudah berisi sip dan pyqt5 secara native
       postFixup = ''
         wrapProgram $out/bin/gns3 \
-          --prefix PYTHONPATH : "$out/${pkgs.python3.sitePackages}:${pkgs.python3.withPackages (ps: sharedPythonPkgs)}/${pkgs.python3.sitePackages}" \
-          --set QT_QPA_PLATFORM_PLUGIN_PATH "${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins/platforms"
+          --set PYTHONPATH "$out/${pkgs.python3.sitePackages}:${pythonEnv}/${pkgs.python3.sitePackages}"
       '';
 
       doCheck = false;
@@ -48,12 +54,12 @@ in {
     myGns3Server = pkgs.gns3-server.overrideAttrs (old: {
       version = autoVersion gns3-server-src;
       src = gns3-server-src;
-      propagatedBuildInputs = sharedPythonPkgs;
+      propagatedBuildInputs = [ pythonEnv ];
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.makeWrapper ];
 
       postFixup = ''
         wrapProgram $out/bin/gns3server \
-          --prefix PYTHONPATH : "$out/${pkgs.python3.sitePackages}:${pkgs.python3.withPackages (ps: sharedPythonPkgs)}/${pkgs.python3.sitePackages}"
+          --set PYTHONPATH "$out/${pkgs.python3.sitePackages}:${pythonEnv}/${pkgs.python3.sitePackages}"
       '';
 
       doCheck = false;
