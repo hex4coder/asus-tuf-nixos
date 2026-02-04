@@ -17,11 +17,13 @@ let
     version = autoVersion gns3-gui-src;
     src = gns3-gui-src;
 
-    # Kita tambahkan sip dan PyQt ke dalam build inputs
-    propagatedBuildInputs = old.propagatedBuildInputs ++ (with pkgs.python3Packages; [
-      sip
-      pyqt5
-    ]);
+    # Kita tidak menggunakan ++ (tambah), tapi kita saring atau timpa
+    # Jika sip tidak ada di 'old', kita tambahkan secara manual di sini
+    propagatedBuildInputs = (with pkgs.python3Packages; [
+     sip
+     pyqt5
+     # Masukkan semua yang ada di 'old' tapi pastikan tidak duplikat
+    ]) ++ (builtins.filter (p: p.pname or "" != "pyqt5") old.propagatedBuildInputs);
 
     # GNS3 v3 seringkali menjalankan tes saat build, 
     # jika tes ini error dan menghambat install, Anda bisa mematikannya sementara:
