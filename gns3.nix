@@ -4,10 +4,8 @@ let
   autoVersion = src: "3.0.6-unstable-${src.lastModifiedDate or "latest"}";
   
   sharedPythonPkgs = with pkgs.python3Packages; [
-    # Ganti PyQt5 ke PyQt6
     pyqt6
     pyqt6-sip
-    
     setuptools
     psutil
     jsonschema
@@ -33,9 +31,15 @@ in {
       src = gns3-gui-src;
       propagatedBuildInputs = sharedPythonPkgs;
 
+      # MEMPERBAIKI BUG SINTAKSIS GNS3 v3
+      # Baris 183 di settings.py memiliki masalah format string di Python 3.13
+      postPatch = ''
+        sed -i "183s|'UltraVNC':.*|'UltraVNC': '\"' + program_files + '\\\uvnc bvba\\\UltraVNC\\\vncviewer.exe\" {host}:{port}',|" gns3/settings.py
+      '';
+
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
         pkgs.makeWrapper 
-        pkgs.qt6.wrapQtAppsHook # Gunakan hook Qt6
+        pkgs.qt6.wrapQtAppsHook 
       ];
 
       postFixup = ''
