@@ -13,7 +13,6 @@ let
     distutils
     sentry-sdk    # Baru ditambahkan
     truststore    # Baru ditambahkan
-    resource
     distro
     setuptools-scm
   ];
