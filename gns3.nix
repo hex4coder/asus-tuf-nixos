@@ -3,36 +3,51 @@
 let
   autoVersion = src: "unstable-${src.lastModifiedDate or "latest"}";
 
-  # Kita definisikan dependensi Python yang dibutuhkan GNS3 v3
-  # Versi 3 sering kali butuh PyQt5/6 dan sip yang sinkron
-  pythonDeps = ps: with ps; [
+  pythonEnv = pkgs.python3.withPackages (ps: with ps; [
     sip
     pyqt5
     setuptools
-    # Tambahkan dependensi lain di sini jika nanti muncul error module lagi
-  ];
-  
+    psutil
+    jsonschema
+    distutils
+    raven
+    resource
+    distro
+  ]); 
   # Definisikan paket custom agar kode di bawah lebih rapi
   myGns3Gui = pkgs.gns3-gui.overrideAttrs (old: {
     version = autoVersion gns3-gui-src;
     src = gns3-gui-src;
 
-    # Kita tidak menggunakan ++ (tambah), tapi kita saring atau timpa
-    # Jika sip tidak ada di 'old', kita tambahkan secara manual di sini
-    propagatedBuildInputs = (with pkgs.python3Packages; [
-     sip
-     pyqt5
-     # Masukkan semua yang ada di 'old' tapi pastikan tidak duplikat
-    ]) ++ (builtins.filter (p: p.pname or "" != "pyqt5") old.propagatedBuildInputs);
+  # Kita paksa menggunakan buildInputs yang bersih
+      # Tambahkan qt5.wrapQtAppsHook agar aplikasi Qt bisa jalan di NixOS
+      nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.qt5.wrapQtAppsHook ];
+      
+      propagatedBuildInputs = with pkgs.python3Packages; [
+        sip
+        pyqt5
+        setuptools
+        psutil
+        jsonschema
+        distutils
+        raven
+        resource
+        distro
+      ];
 
-    # GNS3 v3 seringkali menjalankan tes saat build, 
-    # jika tes ini error dan menghambat install, Anda bisa mematikannya sementara:
-    doCheck = false;
+      # Lewati test yang bikin error 'sip' tadi
+      doCheck = false;
+      
+      # Tambahan jika sip masih tidak terbaca saat runtime
+      makeWrapperArgs = [
+        "--set PYTHONPATH ${pythonEnv}/${pkgs.python3.sitePackages}"
+      ];
   });
 
   myGns3Server = pkgs.gns3-server.overrideAttrs (old: {
     version = autoVersion gns3-server-src;
     src = gns3-server-src;
+    propagatedBuildInputs = old.propagatedBuildInputs ++ [ pkgs.python3Packages.setuptools ];
     # GNS3 v3 seringkali menjalankan tes saat build, 
     # jika tes ini error dan menghambat install, Anda bisa mematikannya sementara:
     doCheck = false;
