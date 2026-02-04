@@ -3,7 +3,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, gns3-gui-src, gns3-server-src, inputs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports =
@@ -14,6 +14,7 @@
       inputs.niri.nixosModules.niri
       ./network.nix
       ./samba.nix
+      ./gns3.nix
     ];
 
   # flakes
@@ -230,12 +231,7 @@
   services.libinput.enable = true;
 
 
-let 
-  # Fungsi untuk membuat versi otomatis berdasarkan tanggal commit
-  # Formatnya akan menjadi: "3.0.6-unstable-2026-02-05"
-  autoVersion = src: "unstable-${src.lastModifiedDate or "latest"}";
 
-in {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.kaco = {
      isNormalUser = true;
@@ -258,17 +254,6 @@ in {
 
 
 
-    (gns3-gui.overrideAttrs (old: {
-      src = gns3-gui-src;
-      version = autoVersion gns3-gui-src;
-    }))
-    (gns3-server.overrideAttrs (old: {
-      src = gns3-server-src;
-      version = autoVersion gns3-server-src;
-    }))
-	dynamips
-	vpcs
-	xterm
 
 
 	# DKV
@@ -279,7 +264,6 @@ in {
 	#kdePackages.kdenlive
      ];
   };
-}
   # untuk kdenlive
   nixpkgs.overlays = [
     (self: super: {
