@@ -11,8 +11,6 @@ let
     jsonschema
     distutils
     raven
-    resource
-    distro
   ]); 
   # Definisikan paket custom agar kode di bawah lebih rapi
   myGns3Gui = pkgs.gns3-gui.overrideAttrs (old: {
@@ -31,8 +29,6 @@ let
         jsonschema
         distutils
         raven
-        resource
-        distro
       ];
 
       # Lewati test yang bikin error 'sip' tadi
