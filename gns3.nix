@@ -31,10 +31,10 @@ in {
       src = gns3-gui-src;
       propagatedBuildInputs = sharedPythonPkgs;
 
-      # MEMPERBAIKI BUG SINTAKSIS GNS3 v3
-      # Baris 183 di settings.py memiliki masalah format string di Python 3.13
+      # STRATEGI BARU: Hapus baris 183 s/d 185 yang berisi path Windows (UltraVNC & SolarWinds)
+      # Baris-baris ini tidak berguna di Linux dan hanya merusak sintaks Python 3.13
       postPatch = ''
-        sed -i "183s|'UltraVNC':.*|'UltraVNC': '\"' + program_files + '\\\uvnc bvba\\\UltraVNC\\\vncviewer.exe\" {host}:{port}',|" gns3/settings.py
+        sed -i '183,185d' gns3/settings.py
       '';
 
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
