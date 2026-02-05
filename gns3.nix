@@ -31,11 +31,13 @@ in {
       src = gns3-gui-src;
       propagatedBuildInputs = sharedPythonPkgs;
 
-      # METODE BARU: Menggunakan regex untuk menetralisir variabel yang bermasalah
-      # Kita cari baris yang dimulai dengan PRECONFIGURED_VNC_CONSOLE_COMMANDS
-      # dan paksa nilainya menjadi dictionary kosong agar tidak ada error unicode/sintaks.
+      # STRATEGI FINAL: 
+      # 1. Cari baris yang mengandung PRECONFIGURED_VNC_CONSOLE_COMMANDS.
+      # 2. Hapus baris tersebut dan 10 baris di bawahnya (untuk memastikan seluruh isi dictionary Windows terbuang).
+      # 3. Masukkan kembali variabel tersebut sebagai dictionary kosong yang valid di satu baris.
       postPatch = ''
-        sed -i 's/PRECONFIGURED_VNC_CONSOLE_COMMANDS = {.*/PRECONFIGURED_VNC_CONSOLE_COMMANDS = {}/' gns3/settings.py
+        sed -i '/PRECONFIGURED_VNC_CONSOLE_COMMANDS = {/,/}/d' gns3/settings.py
+        echo "PRECONFIGURED_VNC_CONSOLE_COMMANDS = {}" >> gns3/settings.py
       '';
 
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
