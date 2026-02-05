@@ -5,8 +5,8 @@ let
   
 in {
   users.users.kaco.packages = [ 
-    pkgs.gns3gui
-    pkgs.gns3server
+    pkgs.gns3-gui
+    pkgs.gns3-server
     pkgs.ubridge
     pkgs.dynamips
     pkgs.vpcs
