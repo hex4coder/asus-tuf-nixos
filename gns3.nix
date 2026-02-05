@@ -32,13 +32,11 @@ in {
       propagatedBuildInputs = sharedPythonPkgs;
 
       # STRATEGI:
-      # 1. Masukkan 'pass' dengan indentasi di bawah 'if' (baris 179) agar Python tidak komplain blok kosong.
-      # 2. Komentari variabel bermasalah yang lama.
-      # 3. Definisikan variabel baru di paling bawah file agar pasti terbaca dan valid.
+      # Kita gunakan perl untuk mengganti seluruh blok dictionary yang bermasalah.
+      # Pola ini mencari 'PRECONFIGURED_VNC_CONSOLE_COMMANDS = {' sampai bertemu penutup '}'
+      # dan menggantinya dengan variabel kosong yang valid secara indentasi.
       postPatch = ''
-        sed -i '180i\    pass' gns3/settings.py
-        sed -i 's/PRECONFIGURED_VNC_CONSOLE_COMMANDS = {/# PRECONFIGURED_VNC_CONSOLE_COMMANDS = {/' gns3/settings.py
-        echo "PRECONFIGURED_VNC_CONSOLE_COMMANDS = {}" >> gns3/settings.py
+        ${pkgs.perl}/bin/perl -i -0777 -pe 's/PRECONFIGURED_VNC_CONSOLE_COMMANDS = \{.*?\}/PRECONFIGURED_VNC_CONSOLE_COMMANDS = {}/sg' gns3/settings.py
       '';
 
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
