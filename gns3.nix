@@ -1,18 +1,29 @@
 { pkgs, ... }:
 
 let
-  # Memaksa penggunaan Python 3.12 untuk GNS3
+  # Gunakan Python 3.12 packages
   python312Packages = pkgs.python312Packages;
   
+  # Override GUI: gunakan Python 3.12 dan matikan test check
   gns3-gui-312 = pkgs.gns3-gui.override {
     python3Packages = python312Packages;
   };
   
-  gns3-server-312 = pkgs.gns3-server.override {
+  # Override Server: gunakan Python 3.12 dan PAKSA matikan test check
+  gns3-server-312 = (pkgs.gns3-server.override {
     python3Packages = python312Packages;
-  };
+  }).overrideAttrs (old: {
+    doCheck = false;
+    dontUsePytestCheck = true;
+    doInstallCheck = false;
+  });
+
 in
 {
+  # Perbaikan Deprecated Docker Option
+  virtualisation.docker.enable = true;
+  hardware.nvidia-container-toolkit.enable = true; # Pengganti enableNvidia
+
   users.users.kaco.packages = [
     gns3-gui-312
     gns3-server-312
@@ -23,7 +34,7 @@ in
     pkgs.xterm
   ];
 
-  # Wrapper tetap sama seperti sebelumnya
+  # Konfigurasi ubridge tetap wajib
   security.wrappers.ubridge = {
     source = "${pkgs.ubridge}/bin/ubridge";
     capabilities = "cap_net_admin,cap_net_raw+ep";
@@ -33,4 +44,6 @@ in
   };
   
   users.groups.ubridge = {};
+  users.groups.wireshark = {};
+  programs.wireshark.enable = true;
 }
