@@ -31,31 +31,35 @@ in {
       src = gns3-gui-src;
       propagatedBuildInputs = sharedPythonPkgs;
 
-      # STRATEGI: Deteksi indentasi otomatis.
-      # Skrip ini mencari baris PRECONFIGURED_VNC_CONSOLE_COMMANDS, 
-      # mengambil spasi di depannya, lalu mengganti seluruh bloknya 
-      # dengan {} yang memiliki spasi yang sama.
+      # STRATEGI:
+      # 1. Baca baris per baris.
+      # 2. Cari baris yang mengandung 'PRECONFIGURED_VNC_CONSOLE_COMMANDS'.
+      # 3. Ambil indentasi aslinya, tulis '{}', lalu buang semua baris sampai ketemu '}'.
       postPatch = ''
         python3 - <<EOF
         import sys
-        import re
-
         path = 'gns3/settings.py'
         with open(path, 'r') as f:
-            content = f.read()
-
-        # Regex ini mencari variabel dari awal nama sampai penutup kurung kurawal '}'
-        # Lalu menggantinya dengan variabel yang sama tapi isinya kosong {}
-        # Menjaga indentasi (spasi di depan) tetap utuh.
-        new_content = re.sub(
-            r'(\s+)PRECONFIGURED_VNC_CONSOLE_COMMANDS = \{.*?\}', 
-            r'\1PRECONFIGURED_VNC_CONSOLE_COMMANDS = {}', 
-            content, 
-            flags=re.DOTALL
-        )
-
+            lines = f.readlines()
+        
         with open(path, 'w') as f:
-            f.write(new_content)
+            inside_target = False
+            for line in lines:
+                if 'PRECONFIGURED_VNC_CONSOLE_COMMANDS =' in line and not inside_target:
+                    # Ambil spasi di depan (indentasi)
+                    indent = line[:line.find('PRECONFIGURED_VNC_CONSOLE_COMMANDS')]
+                    f.write(f'{indent}PRECONFIGURED_VNC_CONSOLE_COMMANDS = {{}}\n')
+                    # Jika dictionary dibuka dengan '{' di baris yang sama, mulai skip
+                    if '{' in line and '}' not in line:
+                        inside_target = True
+                    continue
+                
+                if inside_target:
+                    if '}' in line:
+                        inside_target = False
+                    continue
+                
+                f.write(line)
         EOF
       '';
 
