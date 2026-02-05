@@ -31,10 +31,11 @@ in {
       src = gns3-gui-src;
       propagatedBuildInputs = sharedPythonPkgs;
 
-      # STRATEGI BARU: Hapus baris 183 s/d 185 yang berisi path Windows (UltraVNC & SolarWinds)
-      # Baris-baris ini tidak berguna di Linux dan hanya merusak sintaks Python 3.13
+      # METODE BARU: Menggunakan regex untuk menetralisir variabel yang bermasalah
+      # Kita cari baris yang dimulai dengan PRECONFIGURED_VNC_CONSOLE_COMMANDS
+      # dan paksa nilainya menjadi dictionary kosong agar tidak ada error unicode/sintaks.
       postPatch = ''
-        sed -i '183,185d' gns3/settings.py
+        sed -i 's/PRECONFIGURED_VNC_CONSOLE_COMMANDS = {.*/PRECONFIGURED_VNC_CONSOLE_COMMANDS = {}/' gns3/settings.py
       '';
 
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
