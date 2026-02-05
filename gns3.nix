@@ -31,28 +31,31 @@ in {
       src = gns3-gui-src;
       propagatedBuildInputs = sharedPythonPkgs;
 
-      # STRATEGI TERBARU: Gunakan Python untuk membersihkan SyntaxError.
-      # Kita baca file sebagai baris teks, cari baris yang mengandung variabel bermasalah,
-      # lalu kita ganti secara paksa menjadi dictionary kosong.
+      # STRATEGI: Deteksi indentasi otomatis.
+      # Skrip ini mencari baris PRECONFIGURED_VNC_CONSOLE_COMMANDS, 
+      # mengambil spasi di depannya, lalu mengganti seluruh bloknya 
+      # dengan {} yang memiliki spasi yang sama.
       postPatch = ''
         python3 - <<EOF
         import sys
+        import re
+
         path = 'gns3/settings.py'
         with open(path, 'r') as f:
-            lines = f.readlines()
-        
+            content = f.read()
+
+        # Regex ini mencari variabel dari awal nama sampai penutup kurung kurawal '}'
+        # Lalu menggantinya dengan variabel yang sama tapi isinya kosong {}
+        # Menjaga indentasi (spasi di depan) tetap utuh.
+        new_content = re.sub(
+            r'(\s+)PRECONFIGURED_VNC_CONSOLE_COMMANDS = \{.*?\}', 
+            r'\1PRECONFIGURED_VNC_CONSOLE_COMMANDS = {}', 
+            content, 
+            flags=re.DOTALL
+        )
+
         with open(path, 'w') as f:
-            skip = False
-            for line in lines:
-                if 'PRECONFIGURED_VNC_CONSOLE_COMMANDS =' in line:
-                    f.write('PRECONFIGURED_VNC_CONSOLE_COMMANDS = {}\n')
-                    skip = True
-                    continue
-                if skip:
-                    if '}' in line: # Berhenti skip setelah menemukan penutup dictionary
-                        skip = False
-                    continue
-                f.write(line)
+            f.write(new_content)
         EOF
       '';
 
@@ -71,7 +74,6 @@ in {
       pythonImportsCheck = [ ];
     });
 
-    # Server biasanya tidak punya masalah UI, tapi kita samakan dependensinya
     myGns3Server = pkgs.gns3-server.overrideAttrs (old: {
       version = autoVersion gns3-server-src;
       src = gns3-server-src;
@@ -97,7 +99,6 @@ in {
     pkgs.xterm 
   ];
 
-  # Pengaturan Security & Groups tetap sama
   security.wrappers.ubridge = {
     source = "${pkgs.ubridge}/bin/ubridge";
     capabilities = "cap_net_admin,cap_net_raw+ep";
