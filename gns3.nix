@@ -31,12 +31,14 @@ in {
       src = gns3-gui-src;
       propagatedBuildInputs = sharedPythonPkgs;
 
-      # STRATEGI: Komentari seluruh blok PRECONFIGURED_VNC_CONSOLE_COMMANDS
-      # Lalu tambahkan definisi kosong yang valid.
+      # STRATEGI:
+      # 1. Masukkan 'pass' dengan indentasi di bawah 'if' (baris 179) agar Python tidak komplain blok kosong.
+      # 2. Komentari variabel bermasalah yang lama.
+      # 3. Definisikan variabel baru di paling bawah file agar pasti terbaca dan valid.
       postPatch = ''
+        sed -i '180i\    pass' gns3/settings.py
         sed -i 's/PRECONFIGURED_VNC_CONSOLE_COMMANDS = {/# PRECONFIGURED_VNC_CONSOLE_COMMANDS = {/' gns3/settings.py
-        # Cari baris setelah komentar tadi dan tambahkan definisi kosong
-        sed -i '/# PRECONFIGURED_VNC_CONSOLE_COMMANDS = {/a PRECONFIGURED_VNC_CONSOLE_COMMANDS = {}' gns3/settings.py
+        echo "PRECONFIGURED_VNC_CONSOLE_COMMANDS = {}" >> gns3/settings.py
       '';
 
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
