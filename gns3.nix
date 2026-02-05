@@ -31,36 +31,12 @@ in {
       src = gns3-gui-src;
       propagatedBuildInputs = sharedPythonPkgs;
 
-      # STRATEGI:
-      # 1. Baca baris per baris.
-      # 2. Cari baris yang mengandung 'PRECONFIGURED_VNC_CONSOLE_COMMANDS'.
-      # 3. Ambil indentasi aslinya, tulis '{}', lalu buang semua baris sampai ketemu '}'.
       postPatch = ''
-        python3 - <<EOF
-        import sys
-        path = 'gns3/settings.py'
-        with open(path, 'r') as f:
-            lines = f.readlines()
-        
-        with open(path, 'w') as f:
-            inside_target = False
-            for line in lines:
-                if 'PRECONFIGURED_VNC_CONSOLE_COMMANDS =' in line and not inside_target:
-                    # Ambil spasi di depan (indentasi)
-                    indent = line[:line.find('PRECONFIGURED_VNC_CONSOLE_COMMANDS')]
-                    f.write(f'{indent}PRECONFIGURED_VNC_CONSOLE_COMMANDS = {{}}\n')
-                    # Jika dictionary dibuka dengan '{' di baris yang sama, mulai skip
-                    if '{' in line and '}' not in line:
-                        inside_target = True
-                    continue
-                
-                if inside_target:
-                    if '}' in line:
-                        inside_target = False
-                    continue
-                
-                f.write(line)
-        EOF
+        # Hapus blok dictionary yang bermasalah (dari kurung buka sampai kurung tutup)
+        sed -i '/PRECONFIGURED_VNC_CONSOLE_COMMANDS = {/,/}/d' gns3/settings.py
+        # Masukkan kembali variabel kosong dengan indentasi 4 spasi yang benar
+        # Kita masukkan di baris 181 agar berada di bawah pernyataan 'if' yang menunggunya
+        sed -i '181i\    PRECONFIGURED_VNC_CONSOLE_COMMANDS = {}' gns3/settings.py
       '';
 
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
