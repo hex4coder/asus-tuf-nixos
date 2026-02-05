@@ -31,12 +31,29 @@ in {
       src = gns3-gui-src;
       propagatedBuildInputs = sharedPythonPkgs;
 
-      # STRATEGI:
-      # Kita gunakan perl untuk mengganti seluruh blok dictionary yang bermasalah.
-      # Pola ini mencari 'PRECONFIGURED_VNC_CONSOLE_COMMANDS = {' sampai bertemu penutup '}'
-      # dan menggantinya dengan variabel kosong yang valid secara indentasi.
+      # STRATEGI TERBARU: Gunakan Python untuk membersihkan SyntaxError.
+      # Kita baca file sebagai baris teks, cari baris yang mengandung variabel bermasalah,
+      # lalu kita ganti secara paksa menjadi dictionary kosong.
       postPatch = ''
-        ${pkgs.perl}/bin/perl -i -0777 -pe 's/PRECONFIGURED_VNC_CONSOLE_COMMANDS = \{.*?\}/PRECONFIGURED_VNC_CONSOLE_COMMANDS = {}/sg' gns3/settings.py
+        python3 - <<EOF
+        import sys
+        path = 'gns3/settings.py'
+        with open(path, 'r') as f:
+            lines = f.readlines()
+        
+        with open(path, 'w') as f:
+            skip = False
+            for line in lines:
+                if 'PRECONFIGURED_VNC_CONSOLE_COMMANDS =' in line:
+                    f.write('PRECONFIGURED_VNC_CONSOLE_COMMANDS = {}\n')
+                    skip = True
+                    continue
+                if skip:
+                    if '}' in line: # Berhenti skip setelah menemukan penutup dictionary
+                        skip = False
+                    continue
+                f.write(line)
+        EOF
       '';
 
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ 
@@ -54,6 +71,7 @@ in {
       pythonImportsCheck = [ ];
     });
 
+    # Server biasanya tidak punya masalah UI, tapi kita samakan dependensinya
     myGns3Server = pkgs.gns3-server.overrideAttrs (old: {
       version = autoVersion gns3-server-src;
       src = gns3-server-src;
@@ -79,6 +97,7 @@ in {
     pkgs.xterm 
   ];
 
+  # Pengaturan Security & Groups tetap sama
   security.wrappers.ubridge = {
     source = "${pkgs.ubridge}/bin/ubridge";
     capabilities = "cap_net_admin,cap_net_raw+ep";
