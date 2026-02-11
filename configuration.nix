@@ -424,7 +424,7 @@
     #   "org.freedesktop.impl.portal.Screencast" = [ "wlr" ];
     #   "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
     # };
-  };
+    #};
   };
   
   # Set variabel global agar semua aplikasi tahu harus pakai Portal
