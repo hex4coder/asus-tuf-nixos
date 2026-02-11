@@ -282,7 +282,6 @@
 		obs-vaapi
 		obs-vkcapture
 		obs-pipewire-audio-capture
-		wlrobs
 	];
 	package = pkgs.obs-studio.override {
 		cudaSupport = true;
