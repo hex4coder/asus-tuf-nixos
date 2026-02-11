@@ -282,6 +282,7 @@
 		obs-vaapi
 		obs-vkcapture
 		obs-pipewire-audio-capture
+		wlrobs
 	];
 	package = pkgs.obs-studio.override {
 		cudaSupport = true;
@@ -412,6 +413,7 @@
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
       xdg-desktop-portal-gnome 
+      xdg-desktop-portal-wlr
       # Opsional, jika butuh fitur GNOME spesifik
     ];
 
