@@ -412,19 +412,18 @@
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
       xdg-desktop-portal-gnome 
-      xdg-desktop-portal-wlr
       # Opsional, jika butuh fitur GNOME spesifik
     ];
 
     # 2. Konfigurasi Mapping (PENTING)
     # Ini memberitahu sistem: "Saat di Niri, gunakan portal GTK untuk dialog file"
-    #config.common.default = "*";
-    config = {
-    common = {
-      default = [ "gtk" ];
-      "org.freedesktop.impl.portal.Screencast" = [ "wlr" ];
-      "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
-    };
+    config.common.default = "*";
+    # config = {
+    # common = {
+    #   default = [ "gtk" ];
+    #   "org.freedesktop.impl.portal.Screencast" = [ "wlr" ];
+    #   "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+    # };
   };
   };
   
