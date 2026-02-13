@@ -410,6 +410,7 @@
   # portal gtk
   services.dbus.enable = true;
   security.polkit.enable = true;
+  security.rtkit.enable = true;
   xdg.portal = {
     enable = true;
     xdgOpenUsePortal = true; # Paksa xdg-open pakai portal
@@ -424,7 +425,7 @@
 
     # 2. Konfigurasi Mapping (PENTING)
     # Ini memberitahu sistem: "Saat di Niri, gunakan portal GTK untuk dialog file"
-    config.common.default = "*";
+    config.common.default = ["gtk"];
 	  #  config = {
 	  #   common = {
 	  #     default = [ "gtk" ];
