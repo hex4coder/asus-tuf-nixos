@@ -274,6 +274,12 @@
     })
   ];
 
+  # winbox
+  programs.winbox = {
+	enable = true;
+	openFirewall = true;
+  };
+
   # for obs-studio
   programs.obs-studio = {
 	enable = true;
