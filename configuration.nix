@@ -430,9 +430,11 @@
 	   config = {
 	    common = {
 	      default = [ "gtk" ];
-	      # Memaksa screencast menggunakan gnome (paling stabil untuk dialog pemilih layar)
-	      "org.freedesktop.impl.portal.Screencast" = [ "wlr" ];
-	      "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+	    };
+	    niri = {
+		default = ["gtk"];
+	        "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+	        "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
 	    };
 	    # Khusus untuk sesi niri
 	    # niri = {
