@@ -263,6 +263,11 @@
 	krita
 	inkscape
 	#kdePackages.kdenlive
+
+
+	# opencode ai
+	opencode
+	opencode-desktop
      ];
   };
   # untuk kdenlive
