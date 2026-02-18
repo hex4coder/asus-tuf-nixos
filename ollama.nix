@@ -2,7 +2,8 @@
 
 	services.ollama = {
 		enable = true;
-		acceleration = "cuda";
+		openFirewall = true;
+		package = pkgs.ollama-cuda;
 	};
 
 
