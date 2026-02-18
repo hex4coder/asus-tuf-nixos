@@ -10,4 +10,8 @@
 	environment.systemPackages = [
 		pkgs.ollama
 	];
+
+
+	# add web ui support
+	services.open-webui.enable = true;
 }
