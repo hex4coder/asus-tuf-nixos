@@ -270,6 +270,8 @@
 	opencode
 	opencode-desktop
 	lmstudio
+
+	claude-code
      ];
   };
   # untuk kdenlive
