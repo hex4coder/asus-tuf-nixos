@@ -15,6 +15,7 @@
       ./network.nix
       ./samba.nix
       ./gns3.nix
+      ./ollama.nix
     ];
 
   # flakes
