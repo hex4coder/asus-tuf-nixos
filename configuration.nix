@@ -268,6 +268,7 @@
 	# opencode ai
 	opencode
 	opencode-desktop
+	lmstudio
      ];
   };
   # untuk kdenlive
