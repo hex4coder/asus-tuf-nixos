@@ -384,7 +384,6 @@
   };
   services.supergfxd.enable = true;
   services.asusd.enable = true;
-  services.asusd.enableUserService = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
