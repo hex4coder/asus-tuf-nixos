@@ -44,7 +44,7 @@
 		specialArgs = { inherit gns3-gui-src gns3-server-src inputs; };
 		modules = [
 			./configuration.nix
-			inputs.nixos-hardware.nixosModules.asus-fa506ic
+			# inputs.nixos-hardware.nixosModules.asus-fa506ic
 		];
 	};
   };
