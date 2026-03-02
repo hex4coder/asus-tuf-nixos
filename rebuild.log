@@ -1,0 +1,5 @@
+warning: Git tree '/home/kaco/dotfiles' is dirty
+building the system configuration...
+warning: Git tree '/home/kaco/dotfiles' is dirty
+evaluation warning: You have set virtualisation.docker.enableNvidia. This option is deprecated, please set hardware.nvidia-container-toolkit.enable instead.
+evaluation warning: The xorg package set has been deprecated, 'xorg.libxcb' has been renamed to 'libxcb'
