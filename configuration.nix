@@ -17,6 +17,7 @@
       ./gns3.nix
       ./ollama.nix
       ./aiagent.nix
+      ./vscode.nix
     ];
 
   # flakes
