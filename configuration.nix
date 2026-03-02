@@ -16,6 +16,7 @@
       ./samba.nix
       ./gns3.nix
       ./ollama.nix
+      ./aiagent.nix
     ];
 
   # flakes
