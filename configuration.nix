@@ -124,6 +124,9 @@
   # baterai
   services.upower.enable = true;
 
+  # zram swap
+  zramSwap.enable = true;
+
   # dms shell
   systemd.user.services.niri-flake-polkit.enable = false;
   programs.dank-material-shell = {
