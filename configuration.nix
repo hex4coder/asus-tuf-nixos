@@ -7,7 +7,7 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
+      ./hardware-configuration.nix
       inputs.dms.nixosModules.dank-material-shell
       inputs.dms-plugin-registry.modules.default
       inputs.niri.nixosModules.niri
