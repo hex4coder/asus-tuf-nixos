@@ -78,9 +78,11 @@
   # Git Config (Moved from configuration.nix)
   programs.git = {
     enable = true;
-    userName = "hex4coder";
-    userEmail = "the.programmer.luyo@gmail.com";
-    extraConfig = {
+    user = {
+      name = "hex4coder";
+      email = "the.programmer.luyo@gmail.com";
+    };
+    settings = {
       init.defaultBranch = "main";
     };
   };
