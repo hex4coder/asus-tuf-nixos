@@ -23,7 +23,11 @@ This repository contains a modular NixOS configuration managed via Nix Flakes, s
 ## Key Commands & Operations
 
 ### System Management
-- **Rebuild System:**
+- **Rebuild System (Recommended):**
+  ```bash
+  nos # Alias for: nh os switch . -- --impure
+  ```
+- **Manual Rebuild:**
   ```bash
   sudo nixos-rebuild switch --impure --flake .
   ```
@@ -47,6 +51,9 @@ The configuration defines several bash aliases for Git:
 - **ASUS Support:** `asusctl`, `supergfxd`, and `rog-control-center` are integrated for hardware control.
 - **Power Management:** Configured for ASUS laptops; Bluetooth is disabled by default on boot.
 - **Virtualization:** Docker (with NVIDIA support) and Libvirtd (KVM/QEMU) are enabled for user `kaco`.
+  - **Fix for libvirtd:** `virt-secret-init-encryption.service` is overridden to succeed using `${pkgs.coreutils}/bin/true`.
+  - **Permissions:** `dynamic_ownership = 1` is enabled in `qemu.conf` to allow access to VM images in `/var/lib/libvirt/images/`.
+  - **Manual Step:** If `libvirtd` fails to start, ensure `/var/lib/libvirt/secrets/secrets-encryption-key` exists (can be created manually with `systemd-creds encrypt`).
 
 ## Development Conventions
 
