@@ -21,6 +21,8 @@
   # flakes
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.settings.auto-optimise-store = true;
+  nix.registry.nixpkgs.flake = inputs.nixpkgs;
+  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
   # Garbage Collection (Pembersihan Otomatis)
   nix.gc = {
