@@ -103,7 +103,7 @@
     enable = true;
     theme = {
       name = "Adwaita-dark";
-      package = pkgs.adwaita-icon-theme;
+      package = pkgs.gnome-themes-extra;
     };
     iconTheme = {
       name = "Tela-orange-dark";
