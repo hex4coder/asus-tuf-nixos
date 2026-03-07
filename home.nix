@@ -72,7 +72,8 @@
       gstp = "git stash pop";
       ncb = "sudo nixos-rebuild switch --impure --flake . --upgrade";
       n-up = "git pull && nix flake update && sudo nixos-rebuild switch --impure --flake . && git add flake.lock && git commit -m 'chore: system update' && git push";
-      nos = "nh os switch .";
+      nos = "nh os switch . -- --impure";
+      noh = "nh os switch . -u -- --impure";
     };
   };
 
