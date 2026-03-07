@@ -37,13 +37,19 @@ This repository contains a modular NixOS configuration managed via Nix Flakes, s
   ```
 - **Garbage Collection:** Automatically runs weekly, deleting generations older than 30 days.
 
-### Git Workflow (Aliases)
-The configuration defines several bash aliases for Git:
+### Theme Management
+- **Switch to Dark Mode:** `set-dark`
+- **Switch to Light Mode:** `set-light`
+> Note: These commands sync GTK settings with DMS via `gsettings`.
+
+### Git & Shell Workflow (Aliases)
+The configuration defines several aliases for Git and system management (Zsh is the preferred shell):
 - `gs`: `git status`
 - `gaa`: `git add --all`
 - `gc`: `git commit -am`
 - `gp`: `git push`
 - `gl`: `git pull`
+- `nos`: `nh os switch . -- --impure` (Primary rebuild command)
 
 ## Hardware & System Specifics
 
