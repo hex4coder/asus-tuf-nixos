@@ -21,6 +21,7 @@
 
   # flakes
   nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.auto-optimise-store = true;
 
   # auto remove history
   nix.gc = {
@@ -239,27 +240,6 @@
      isNormalUser = true;
      description = "Kaco Jirris";
      extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "kvm" "ubridge" "gns3" "wireshark"]; 
-     packages = with pkgs; [
-     	vlc
-     	peazip
-       	tree
-	      firefox
-	      google-chrome
-	      antigravity
-	      rustdesk
-	      fastfetch
-        signal-desktop
-	unzip
-	zoom-us
-
-
-	# DKV
-	gimp
-	blender
-	krita
-	inkscape
-	#kdePackages.kdenlive
-     ];
   };
   # untuk kdenlive
   nixpkgs.overlays = [
@@ -283,19 +263,6 @@
 	package = pkgs.obs-studio.override {
 		cudaSupport = true;
 	};
-  };
-
-  # Git Config
-  programs.git = {
-	enable = true;
-	config = {
-		user = {
-			name = "hex4coder";
-			email = "the.programmer.luyo@gmail.com";
-		};
-		init.defaultBranch = "main";
-	};
-
   };
 
   # programs.firefox.enable = true;
@@ -477,39 +444,6 @@
   programs.bash = {
 	enable = true;
 	completion.enable = true;
-	shellAliases = {
-# Shortcut dasar
-      g = "git";
-      
-      # Status & Add
-      gs = "git status";
-      ga = "git add";
-      gaa = "git add --all";
-      
-      # Commit
-      gc = "git commit -am";
-      gca = "git commit --amend";
-      
-      # Push & Pull
-      gp = "git push";
-      gl = "git pull";
-      
-      # Branch & Checkout
-      gb = "git branch";
-      gco = "git checkout";
-      gcb = "git checkout -b"; # Buat branch baru dan pindah
-      
-      # Diff & Log
-      gd = "git diff";
-      glog = "git log --oneline --decorate --graph"; # Log yang rapi
-      
-      # Stash
-      gsta = "git stash push";
-      gstp = "git stash pop";
-
-      # for nix os rebuild
-      ncb = "sudo nixos-rebuild switch --impure --flake --upgrade";
-	};
   };
 
 }
