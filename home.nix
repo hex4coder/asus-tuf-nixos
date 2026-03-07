@@ -67,8 +67,14 @@
       package = pkgs.adwaita-icon-theme;
     };
     iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
+      name = "Tela-orange-dark";
+      package = pkgs.tela-icon-theme;
+    };
+    gtk3.extraConfig = {
+      gtk-recent-files-enabled = 0;
+    };
+    gtk4.extraConfig = {
+      gtk-recent-files-enabled = 0;
     };
   };
 
