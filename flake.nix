@@ -56,7 +56,6 @@
 				home-manager.users.kaco = import ./home.nix;
 				home-manager.extraSpecialArgs = { inherit inputs; };
 			}
-			# inputs.nixos-hardware.nixosModules.asus-fa506ic
 		];
 	};
   };
