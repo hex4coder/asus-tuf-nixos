@@ -35,7 +35,13 @@ This repository contains a modular NixOS configuration managed via Nix Flakes, s
   ```bash
   sudo nixos-rebuild switch --impure --flake . --upgrade
   ```
-- **Garbage Collection:** Automatically runs weekly, deleting generations older than 30 days.
+- **Automated Cleaning (NH):** System generations are managed by `nh clean`, keeping the last 5 generations and those from the last 3 days.
+- **Garbage Collection:** Legacy Nix GC is disabled in favor of `nh` automated cleaning.
+
+### Application Launcher (Fuzzel)
+- **Primary Launcher:** Fuzzel is configured as the main Wayland launcher.
+- **Configuration:** Located in `./fuzzel/fuzzel.ini`, managed via Home Manager.
+- **Theme:** Dark mode (Tokyo Night style) with JetBrainsMono Nerd Font (size 10).
 
 ### Theme Management
 - **Switch to Dark Mode:** `set-dark`
@@ -53,8 +59,11 @@ The configuration defines several aliases for Git and system management (Zsh is 
 
 ## Hardware & System Specifics
 
-- **Graphics:** NVIDIA proprietary drivers are enabled with Wayland optimizations (`nvidia_drm.modeset=1`).
+- **Graphics:** NVIDIA proprietary drivers are enabled with Wayland optimizations (`nvidia_drm.modeset=1`). 
+  - **Hybrid Boot Fix:** `amdgpu` is included in `boot.initrd.kernelModules` to ensure smooth display initialization.
 - **ASUS Support:** `asusctl`, `supergfxd`, and `rog-control-center` are integrated for hardware control.
+- **SSD Optimization:** `services.fstrim.enable = true` is active for periodic drive maintenance.
+- **Firmware Management:** `fwupd` is enabled. Use `fwupdmgr refresh && fwupdmgr get-updates` to check for hardware firmware updates (BIOS, SSD, etc).
 - **Power Management:** Configured for ASUS laptops; Bluetooth is disabled by default on boot.
 - **Virtualization:** Docker (with NVIDIA support) and Libvirtd (KVM/QEMU) are enabled for user `kaco`.
   - **Fix for libvirtd:** `virt-secret-init-encryption.service` is overridden to succeed using `${pkgs.coreutils}/bin/true`.
