@@ -33,6 +33,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.timeout = 0;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Plymouth boot screen
@@ -41,6 +42,8 @@
     theme = "breeze";
   };
 
+  boot.consoleLogLevel = 0;
+  boot.initrd.verbose = false;
   boot.kernelParams = [
 	"nvidia_drm.modeset=1"
 	"nvidia_drm.fbdev=1"
