@@ -201,6 +201,9 @@
 		'';
 	};
   };
+  # Fix for failed virt-secret-init-encryption service
+  systemd.services.virt-secret-init-encryption.enable = false;
+
   programs.virt-manager.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
 
