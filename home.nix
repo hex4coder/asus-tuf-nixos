@@ -214,6 +214,7 @@
     enableBashIntegration = true;
   };
 
-  # Niri Configuration Link
+  # Config Links
   xdg.configFile."niri".source = ./niri;
+  xdg.configFile."fuzzel".source = ./fuzzel;
 }
