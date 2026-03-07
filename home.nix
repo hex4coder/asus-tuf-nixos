@@ -38,6 +38,28 @@
     FLAKE = "/home/kaco/dotfiles";
   };
 
+  # Pointer Cursor Config
+  home.pointerCursor = {
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Amber";
+    size = 24;
+    gtk.enable = true;
+    x11.enable = true;
+  };
+
+  # GTK Theme Config
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.adwaita-icon-theme;
+    };
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
+    };
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
