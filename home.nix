@@ -36,6 +36,10 @@
     blender
     krita
     inkscape
+
+    # Modern CLI (Rust-based)
+    fd
+    bat
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
