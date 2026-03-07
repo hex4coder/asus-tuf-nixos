@@ -150,4 +150,7 @@
     enableZshIntegration = true;
     enableBashIntegration = true;
   };
+
+  # Niri Configuration Link
+  xdg.configFile."niri".source = ./niri;
 }
