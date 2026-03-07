@@ -35,13 +35,16 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = 0;
+  boot.loader.timeout = 1;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Plymouth boot screen
   boot.plymouth = {
     enable = true;
-    theme = "breeze";
+    theme = "circle";
+    themePackages = with pkgs; [
+      adi1090x-plymouth-themes
+    ];
   };
 
   boot.consoleLogLevel = 0;
