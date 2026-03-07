@@ -50,6 +50,25 @@
     nix-direnv.enable = true;
   };
 
+  # Tmux Config
+  programs.tmux = {
+    enable = true;
+    mouse = true;
+    baseIndex = 1;
+    clock24 = true;
+    extraConfig = ''
+      # Set prefix to Ctrl-a (optional, default is Ctrl-b)
+      # set -g prefix C-a
+      # bind C-a send-prefix
+      
+      # Split panes using | and -
+      bind | split-window -h
+      bind - split-window -v
+      unbind '"'
+      unbind %
+    '';
+  };
+
   # Dark/Light Mode Consistency (GSettings)
   dconf.settings = {
     "org/gnome/desktop/interface" = {
