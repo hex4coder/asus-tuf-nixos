@@ -50,6 +50,20 @@
     nix-direnv.enable = true;
   };
 
+  # Dark/Light Mode Consistency (GSettings)
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+  };
+
+  # QT Config for consistency
+  qt = {
+    enable = true;
+    platformTheme.name = "gtk";
+    style.name = "adwaita-dark";
+  };
+
   # Pointer Cursor Config
   home.pointerCursor = {
     package = pkgs.bibata-cursors;
