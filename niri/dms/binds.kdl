@@ -2,4 +2,8 @@ binds {
     Alt+Ctrl+P hotkey-overlay-title="Power Menu: Toggle" { spawn "dms" "ipc" "call" "powermenu" "toggle"; }
     Alt+S hotkey-overlay-title="Screenshot: Interactive" { spawn "dms" "ipc" "call" "niri" "screenshot"; }
     Ctrl+space hotkey-overlay-title="App Launcher: Toggle" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+
+    Mod+Shift+1 hotkey-overlay-title="ASUS: Quiet Profile" { spawn "asusctl" "profile" "set" "Quiet"; }
+    Mod+Shift+2 hotkey-overlay-title="ASUS: Balanced Profile" { spawn "asusctl" "profile" "set" "Balanced"; }
+    Mod+Shift+3 hotkey-overlay-title="ASUS: Performance Profile" { spawn "asusctl" "profile" "set" "Performance"; }
 }

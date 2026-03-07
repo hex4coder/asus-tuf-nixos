@@ -1,0 +1,29 @@
+// niri/dms/windowrules.kdl
+
+// Aturan untuk aplikasi ROG/ASUS agar selalu floating
+window-rule {
+    match app-id=r#"^rog-control-center$"#
+    match app-id=r#"^asus-rog-gui$"#
+    open-floating true
+}
+
+// Aturan untuk File Manager (Nautilus) agar lebih rapi
+window-rule {
+    match app-id=r#"^org\.gnome\.Nautilus$"#
+    default-column-width { proportion 0.4; }
+}
+
+// Aturan untuk Kalkulator dan dialog sistem
+window-rule {
+    match app-id=r#"^org\.gnome\.Calculator$"#
+    match app-id=r#"^nm-connection-editor$"#
+    match app-id=r#"^pavucontrol$"#
+    open-floating true
+}
+
+// Aturan untuk VSCode agar lebih lebar secara default
+window-rule {
+    match app-id=r#"^code-url-handler$"#
+    match app-id=r#"^vscode$"#
+    default-column-width { proportion 0.7; }
+}

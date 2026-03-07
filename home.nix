@@ -35,7 +35,7 @@
   home.file = {};
 
   home.sessionVariables = {
-    FLAKE = "/home/kaco/dotfiles";
+    NH_FLAKE = "/home/kaco/dotfiles";
   };
 
   # Pointer Cursor Config
