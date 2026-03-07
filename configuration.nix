@@ -360,6 +360,7 @@
      adwaita-icon-theme
      nwg-look 
      #apps
+     tor-browser
      onlyoffice-desktopeditors
 
 
