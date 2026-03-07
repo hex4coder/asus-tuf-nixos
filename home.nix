@@ -30,12 +30,24 @@
     fd
     bat
     nh
+    
+    # Fonts
+    inter
+    nerd-fonts.jetbrains-mono
   ];
+
+  fonts.fontconfig.enable = true;
 
   home.file = {};
 
   home.sessionVariables = {
     NH_FLAKE = "/home/kaco/dotfiles";
+  };
+  
+  # Direnv Config
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
   };
 
   # Pointer Cursor Config
@@ -63,12 +75,14 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  # Git Config
+  # Git Config (Refactored to settings)
   programs.git = {
     enable = true;
-    userName = "hex4coder";
-    userEmail = "the.programmer.luyo@gmail.com";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "hex4coder";
+        email = "the.programmer.luyo@gmail.com";
+      };
       init.defaultBranch = "main";
     };
   };
