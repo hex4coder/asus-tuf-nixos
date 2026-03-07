@@ -24,11 +24,12 @@
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
   nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
-  # Garbage Collection (Pembersihan Otomatis)
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 5d";
+  # Garbage Collection (Pembersihan Otomatis menggunakan NH)
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-five --keep-since 3d";
+    flake = "/home/kaco/dotfiles";
   };
 
   # Use the systemd-boot EFI boot loader.
@@ -129,8 +130,9 @@
 	package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
   };
 
-  # baterai
+  # baterai & SSD
   services.upower.enable = true;
+  services.fstrim.enable = true;
 
   # zram swap
   zramSwap.enable = true;
@@ -344,9 +346,18 @@
 
   system.stateVersion = "25.11";
 
-  # for bash
-  programs.bash = {
-	enable = true;
-	completion.enable = true;
-  };
-}
+    # for bash
+    programs.bash = {
+          enable = true;
+          completion.enable = true;
+    };
+  
+          # Fonts management
+          fonts.packages = with pkgs; [
+            noto-fonts-color-emoji
+            fira-code
+            fira-code-symbols
+            liberation_ttf
+            mplus-outline-fonts.githubRelease
+          ];
+        }
