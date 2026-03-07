@@ -106,3 +106,35 @@ include "dms/colors.kdl"
 include "dms/windowrules.kdl"
 include "dms/wpblur.kdl"
 include "dms/alttab.kdl"
+
+// --- CUSTOM OVERRIDES ---
+layout {
+    gaps 8
+    
+    focus-ring {
+        enable true
+        width 4
+        active-color "#ff9500" // Warna oranye (matching icon theme)
+        inactive-color "#505050"
+    }
+
+    shadow {
+        enable true
+        softness 30
+        spread 5
+        offset x=0 y=10
+        color "#00000080"
+    }
+}
+
+window-rule {
+    geometry-corner-radius 16
+    clip-to-geometry true
+}
+
+// Aturan khusus agar popup DMS dan bar juga cantik
+layer-rule {
+    geometry-corner-radius 16
+    clip-to-geometry true
+}
+
