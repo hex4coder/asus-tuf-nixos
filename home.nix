@@ -175,6 +175,10 @@
       nos = "nh os switch . -- --impure";
       noh = "nh os switch . -u -- --impure";
       n-clean = "nh clean all --keep 5";
+      
+      # GTK Theme Switchers
+      set-dark = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' && gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'";
+      set-light = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-light' && gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'";
     };
   };
 
