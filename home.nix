@@ -29,6 +29,7 @@
     signal-desktop
     unzip
     zoom-us
+    btop
 
     # DKV
     gimp
@@ -102,5 +103,38 @@
       gstp = "git stash pop";
       ncb = "sudo nixos-rebuild switch --impure --flake . --upgrade";
     };
+  };
+
+  # Modern CLI Tools
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    shellAliases = config.programs.bash.shellAliases; # Share aliases from bash
+  };
+
+  programs.starship = {
+    enable = true;
+    # settings = { ... }; # You can customize starship here
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+  };
+
+  programs.eza = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+    icons = "auto";
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
   };
 }

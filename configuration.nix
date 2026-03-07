@@ -238,9 +238,14 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.kaco = {
      isNormalUser = true;
+     shell = pkgs.zsh;
      description = "Kaco Jirris";
      extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "kvm" "ubridge" "gns3" "wireshark"]; 
   };
+  
+  # Global Zsh activation (required for some shell integrations)
+  programs.zsh.enable = true;
+
   # untuk kdenlive
   nixpkgs.overlays = [
     (self: super: {

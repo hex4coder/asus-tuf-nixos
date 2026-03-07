@@ -43,10 +43,10 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs: {
+  outputs = { self, nixpkgs, home-manager, gns3-gui-src, gns3-server-src, ... } @ inputs: {
 	nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
 		system = "x86_64-linux";
-		specialArgs = { inherit inputs; };
+		specialArgs = { inherit gns3-gui-src gns3-server-src inputs; };
 		modules = [
 			./configuration.nix
 			home-manager.nixosModules.home-manager
