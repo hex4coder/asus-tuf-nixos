@@ -66,7 +66,7 @@
   boot.kernelModules = ["acpi_call"];
   boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
   #suspend fix
-  boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+  boot.initrd.kernelModules = [ "amdgpu" "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
 
   # networking
   networking.nameservers = [ "8.8.8.8" ];
