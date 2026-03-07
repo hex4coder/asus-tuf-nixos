@@ -17,6 +17,7 @@
       ./gns3.nix
       ./aiagent.nix
       ./vscode.nix
+      ./labtjkt.nix
     ];
 
   # flakes
@@ -238,7 +239,7 @@
   users.users.kaco = {
      isNormalUser = true;
      description = "Kaco Jirris";
-     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "kvm" "ubridge" "gns3"]; 
+     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "kvm" "ubridge" "gns3" "wireshark"]; 
      packages = with pkgs; [
      	vlc
      	peazip
