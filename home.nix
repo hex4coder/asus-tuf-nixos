@@ -29,11 +29,14 @@
     # Modern CLI (Rust-based)
     fd
     bat
+    nh
   ];
 
   home.file = {};
 
-  home.sessionVariables = {};
+  home.sessionVariables = {
+    FLAKE = "/home/kaco/dotfiles";
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -69,6 +72,7 @@
       gstp = "git stash pop";
       ncb = "sudo nixos-rebuild switch --impure --flake . --upgrade";
       n-up = "git pull && nix flake update && sudo nixos-rebuild switch --impure --flake . && git add flake.lock && git commit -m 'chore: system update' && git push";
+      nos = "nh os switch .";
     };
   };
 
