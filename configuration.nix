@@ -34,11 +34,25 @@
   boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # Plymouth boot screen
+  boot.plymouth = {
+    enable = true;
+    theme = "breeze";
+  };
+
   boot.kernelParams = [
 	"nvidia_drm.modeset=1"
 	"nvidia_drm.fbdev=1"
 	"nvidia.NVreg_PreserveVideoMemoryAllocations=1"
 	"nvidia.NVreg_EnableS0ixPowerManagement=1"
+	"quiet"
+	"splash"
+	"boot.shell_on_fail"
+	"loglevel=3"
+	"rd.systemd.show_status=false"
+	"rd.udev.log_level=3"
+	"udev.log_priority=3"
   ];
   boot.kernelModules = ["acpi_call"];
   boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
