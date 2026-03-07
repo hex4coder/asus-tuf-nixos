@@ -129,6 +129,7 @@ window-rule {
     match {}
     geometry-corner-radius 16
     clip-to-geometry true
+    draw-border-with-background false
 }
 
 // Aturan khusus agar popup DMS dan bar juga cantik

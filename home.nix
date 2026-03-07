@@ -73,9 +73,26 @@
     gtk3.extraConfig = {
       gtk-recent-files-enabled = 0;
     };
+    gtk3.extraCss = ''
+      headerbar {
+        margin-top: -100px;
+        opacity: 0;
+      }
+      window.maximized headerbar,
+      window.fullscreen headerbar {
+        margin-top: 0;
+        opacity: 1;
+      }
+    '';
     gtk4.extraConfig = {
       gtk-recent-files-enabled = 0;
     };
+    gtk4.extraCss = ''
+      headerbar {
+        margin-top: -100px;
+        opacity: 0;
+      }
+    '';
   };
 
   # Let Home Manager install and manage itself.
