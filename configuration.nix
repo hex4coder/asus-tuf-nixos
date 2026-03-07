@@ -14,7 +14,6 @@
       inputs.niri.nixosModules.niri
       ./network.nix
       ./samba.nix
-      ./gns3.nix
       ./aiagent.nix
       ./vscode.nix
       ./labtjkt.nix
@@ -243,7 +242,6 @@
      packages = with pkgs; [
      	vlc
      	peazip
-	tigervnc
        	tree
 	      firefox
 	      google-chrome
@@ -252,12 +250,7 @@
 	      fastfetch
         signal-desktop
 	unzip
-	ventoy-full
 	zoom-us
-
-
-
-	winbox4
 
 
 	# DKV
@@ -278,12 +271,6 @@
     })
   ];
 
-  # winbox
-  programs.winbox = {
-	enable = true;
-	openFirewall = true;
-  };
-
   # for obs-studio
   programs.obs-studio = {
 	enable = true;
@@ -297,11 +284,6 @@
 		cudaSupport = true;
 	};
   };
-
-  # for ventoy
-  nixpkgs.config.permittedInsecurePackages = [
-                "ventoy-1.1.10"
-              ];
 
   # Git Config
   programs.git = {
@@ -354,12 +336,6 @@
      #apps
      tor-browser
      onlyoffice-desktopeditors
-
-
-     # for student in tjkt
-     virt-manager
-     qemu_kvm
-     dnsmasq
   ];
 
   # for gns3 server service
