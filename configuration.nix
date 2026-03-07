@@ -22,11 +22,11 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.settings.auto-optimise-store = true;
 
-  # auto remove history
+  # Garbage Collection (Pembersihan Otomatis)
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 7d";
+    options = "--delete-older-than 5d";
   };
 
   # Use the systemd-boot EFI boot loader.
