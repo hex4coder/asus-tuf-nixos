@@ -197,12 +197,15 @@
 		verbatimConfig = ''
 			user = "kaco"
 			group = "libvirtd"
-			dynamic_ownership = 0
+			dynamic_ownership = 1
 		'';
 	};
   };
   # Fix for failed virt-secret-init-encryption service
-  systemd.services.virt-secret-init-encryption.enable = false;
+  systemd.services.virt-secret-init-encryption = {
+    enable = true;
+    serviceConfig.ExecStart = [ "" "${pkgs.coreutils}/bin/true" ];
+  };
 
   programs.virt-manager.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
