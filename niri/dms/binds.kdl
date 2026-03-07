@@ -1,6 +1,6 @@
 binds {
     Alt+Ctrl+P hotkey-overlay-title="Power Menu: Toggle" { spawn "dms" "ipc" "call" "powermenu" "toggle"; }
-    Alt+S hotkey-overlay-title="Screenshot: Interactive" { spawn "dms" "ipc" "call" "niri" "screenshot"; }
+    Alt+S hotkey-overlay-title="Screenshot: Select Area" { spawn "bash" "-c" "grim -g \"$(slurp)\" - | wl-copy && grim -g \"$(slurp)\" ~/Pictures/Screenshot_$(date +%Y%m%d_%H%M%S).png"; }
     Ctrl+space hotkey-overlay-title="App Launcher: Toggle" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
 
     Mod+Shift+1 hotkey-overlay-title="ASUS: Quiet Profile" { spawn "asusctl" "profile" "set" "Quiet"; }

@@ -31,6 +31,10 @@
     bat
     nh
     
+    # Screenshot
+    grim
+    slurp
+
     # Fonts
     inter
     nerd-fonts.jetbrains-mono
