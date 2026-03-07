@@ -130,9 +130,10 @@
 	package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.default;
   };
 
-  # baterai & SSD
+  # baterai, SSD, & firmware
   services.upower.enable = true;
   services.fstrim.enable = true;
+  services.fwupd.enable = true;
 
   # zram swap
   zramSwap.enable = true;
