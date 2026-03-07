@@ -15,7 +15,6 @@
       ./network.nix
       ./samba.nix
       ./gns3.nix
-      ./ollama.nix
       ./aiagent.nix
       ./vscode.nix
     ];
@@ -266,14 +265,6 @@
 	krita
 	inkscape
 	#kdePackages.kdenlive
-
-
-	# opencode ai
-	opencode
-	opencode-desktop
-	lmstudio
-
-	claude-code
      ];
   };
   # untuk kdenlive

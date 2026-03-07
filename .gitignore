@@ -1,0 +1,5 @@
+rebuild.log
+result
+result-*
+.direnv/
+.envrc
