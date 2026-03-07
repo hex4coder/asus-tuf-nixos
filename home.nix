@@ -88,6 +88,7 @@
       gtk-recent-files-enabled = 0;
     };
     gtk3.extraCss = ''
+      @import url("file:///home/kaco/.config/gtk-3.0/dank-colors.css");
       headerbar {
         margin-top: -100px;
         opacity: 0;
@@ -102,6 +103,7 @@
       gtk-recent-files-enabled = 0;
     };
     gtk4.extraCss = ''
+      @import url("file:///home/kaco/.config/gtk-3.0/dank-colors.css");
       headerbar {
         margin-top: -100px;
         opacity: 0;
