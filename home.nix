@@ -103,6 +103,10 @@
   # GTK Theme Config
   gtk = {
     enable = true;
+    theme = {
+      name = "adw-gtk3-dark";
+      package = pkgs.adw-gtk3;
+    };
     iconTheme = {
       name = "Tela-orange-dark";
       package = pkgs.tela-icon-theme;
@@ -118,6 +122,14 @@
       @define-color theme_selected_bg_color #ff9500;
       @define-color theme_selected_fg_color white;
       @define-color accent_color #ff9500;
+
+      @media (prefers-color-scheme: dark) {
+        @define-color window_bg_color #1e1e2e;
+        @define-color window_fg_color #c0caf5;
+        @define-color view_bg_color #1a1b26;
+        @define-color headerbar_bg_color #1e1e2e;
+        @define-color card_bg_color #24283b;
+      }
 
       /* Paksa warna untuk elemen UI lama */
       selection { background-color: #ff9500; color: white; }
@@ -141,6 +153,13 @@
       @define-color accent_bg_color #ff9500;
       @define-color accent_fg_color white;
       @define-color accent_color #ff9500;
+
+      @media (prefers-color-scheme: dark) {
+        @define-color window_bg_color #1e1e2e;
+        @define-color window_fg_color #c0caf5;
+        @define-color view_bg_color #1a1b26;
+        @define-color headerbar_bg_color #1e1e2e;
+      }
       
       @import url("file:///home/kaco/.config/gtk-3.0/dank-colors.css");
       headerbar {
@@ -191,8 +210,8 @@
       n-clean = "nh clean all --keep 5";
       
       # GTK Theme Switchers
-      set-dark = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' && gsettings set org.gnome.desktop.interface accent-color 'orange'";
-      set-light = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-light' && gsettings set org.gnome.desktop.interface accent-color 'orange'";
+      set-dark = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' && gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark' && gsettings set org.gnome.desktop.interface accent-color 'orange'";
+      set-light = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-light' && gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' && gsettings set org.gnome.desktop.interface accent-color 'orange'";
     };
   };
 
