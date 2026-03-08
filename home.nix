@@ -103,6 +103,10 @@
   # GTK Theme Config
   gtk = {
     enable = true;
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
+    };
     iconTheme = {
       name = "Tela-orange-dark";
       package = pkgs.tela-icon-theme;
@@ -111,6 +115,10 @@
       gtk-recent-files-enabled = 0;
     };
     gtk3.extraCss = ''
+      @define-color accent_bg_color #ff9500;
+      @define-color accent_fg_color white;
+      @define-color selected_bg_color #ff9500;
+      @define-color selected_fg_color white;
       @import url("file:///home/kaco/.config/gtk-3.0/dank-colors.css");
       headerbar {
         margin-top: -100px;
@@ -126,6 +134,8 @@
       gtk-recent-files-enabled = 0;
     };
     gtk4.extraCss = ''
+      @define-color accent_bg_color #ff9500;
+      @define-color accent_fg_color white;
       @import url("file:///home/kaco/.config/gtk-3.0/dank-colors.css");
       headerbar {
         margin-top: -100px;
