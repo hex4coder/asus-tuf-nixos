@@ -104,8 +104,8 @@
   gtk = {
     enable = true;
     theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
+      name = "adw-gtk3-dark";
+      package = pkgs.adw-gtk3;
     };
     iconTheme = {
       name = "Tela-orange-dark";
@@ -119,6 +119,14 @@
       @define-color accent_fg_color white;
       @define-color selected_bg_color #ff9500;
       @define-color selected_fg_color white;
+      @define-color theme_selected_bg_color #ff9500;
+      @define-color theme_selected_fg_color white;
+      @define-color accent_color #ff9500;
+
+      /* Paksa warna untuk elemen UI lama */
+      selection { background-color: #ff9500; color: white; }
+      .selected { background-color: #ff9500; color: white; }
+      
       @import url("file:///home/kaco/.config/gtk-3.0/dank-colors.css");
       headerbar {
         margin-top: -100px;
@@ -136,6 +144,8 @@
     gtk4.extraCss = ''
       @define-color accent_bg_color #ff9500;
       @define-color accent_fg_color white;
+      @define-color accent_color #ff9500;
+      
       @import url("file:///home/kaco/.config/gtk-3.0/dank-colors.css");
       headerbar {
         margin-top: -100px;
