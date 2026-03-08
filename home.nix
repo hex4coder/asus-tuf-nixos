@@ -31,6 +31,7 @@
     fd
     bat
     nh
+    yt-dlp
     
     # Fonts
     inter
