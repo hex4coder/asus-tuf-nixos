@@ -25,6 +25,7 @@
     blender
     krita
     inkscape
+    audacity
 
     # Modern CLI (Rust-based)
     fd
