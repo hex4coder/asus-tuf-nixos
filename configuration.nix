@@ -216,9 +216,6 @@
   # Enable touchpad support
   services.libinput.enable = true;
 
-  # adb
-  programs.adb.enable = true;
-
   # Define a user account.
   users.users.kaco = {
      isNormalUser = true;
