@@ -32,6 +32,7 @@
     bat
     nh
     yt-dlp
+    scrcpy
     
     # Fonts
     inter
