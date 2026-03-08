@@ -115,14 +115,6 @@
       gtk-recent-files-enabled = 0;
     };
     gtk3.extraCss = ''
-      @media (prefers-color-scheme: dark) {
-        @define-color window_bg_color #1e1e2e;
-        @define-color window_fg_color #c0caf5;
-        @define-color view_bg_color #1a1b26;
-        @define-color headerbar_bg_color #1e1e2e;
-        @define-color card_bg_color #24283b;
-      }
-
       @define-color accent_bg_color #ff9500;
       @define-color accent_fg_color white;
       @define-color selected_bg_color #ff9500;
@@ -150,13 +142,6 @@
       gtk-recent-files-enabled = 0;
     };
     gtk4.extraCss = ''
-      @media (prefers-color-scheme: dark) {
-        @define-color window_bg_color #1e1e2e;
-        @define-color window_fg_color #c0caf5;
-        @define-color view_bg_color #1a1b26;
-        @define-color headerbar_bg_color #1e1e2e;
-      }
-
       @define-color accent_bg_color #ff9500;
       @define-color accent_fg_color white;
       @define-color accent_color #ff9500;
