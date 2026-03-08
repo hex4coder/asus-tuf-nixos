@@ -216,12 +216,15 @@
   # Enable touchpad support
   services.libinput.enable = true;
 
+  # adb
+  programs.adb.enable = true;
+
   # Define a user account.
   users.users.kaco = {
      isNormalUser = true;
      shell = pkgs.zsh;
      description = "Kaco Jirris";
-     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "kvm" "ubridge" "gns3" "wireshark"]; 
+     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "kvm" "ubridge" "gns3" "wireshark" "adbusers"]; 
   };
   
   # Global Zsh activation

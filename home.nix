@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ./android-devs.nix
+  ];
+
   home.username = "kaco";
   home.homeDirectory = "/home/kaco";
 
@@ -32,7 +36,6 @@
     bat
     nh
     yt-dlp
-    scrcpy
     
     # Fonts
     inter
