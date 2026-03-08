@@ -204,8 +204,8 @@
       n-clean = "nh clean all --keep 5";
       
       # GTK Theme Switchers
-      set-dark = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' && gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark' && gsettings set org.gnome.desktop.interface accent-color 'orange'";
-      set-light = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-light' && gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita' && gsettings set org.gnome.desktop.interface accent-color 'orange'";
+      set-dark = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' && gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark' && gsettings set org.gnome.desktop.interface accent-color 'orange'";
+      set-light = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-light' && gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' && gsettings set org.gnome.desktop.interface accent-color 'orange'";
     };
   };
 
