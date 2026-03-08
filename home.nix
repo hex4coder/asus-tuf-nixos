@@ -103,10 +103,6 @@
   # GTK Theme Config
   gtk = {
     enable = true;
-    theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
-    };
     iconTheme = {
       name = "Tela-orange-dark";
       package = pkgs.tela-icon-theme;
