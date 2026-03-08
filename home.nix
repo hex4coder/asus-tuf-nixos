@@ -103,10 +103,6 @@
   # GTK Theme Config
   gtk = {
     enable = true;
-    theme = {
-      name = "adw-gtk3-dark";
-      package = pkgs.adw-gtk3;
-    };
     iconTheme = {
       name = "Tela-orange-dark";
       package = pkgs.tela-icon-theme;
@@ -195,8 +191,8 @@
       n-clean = "nh clean all --keep 5";
       
       # GTK Theme Switchers
-      set-dark = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' && gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark' && gsettings set org.gnome.desktop.interface accent-color 'orange'";
-      set-light = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-light' && gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' && gsettings set org.gnome.desktop.interface accent-color 'orange'";
+      set-dark = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' && gsettings set org.gnome.desktop.interface accent-color 'orange'";
+      set-light = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-light' && gsettings set org.gnome.desktop.interface accent-color 'orange'";
     };
   };
 
