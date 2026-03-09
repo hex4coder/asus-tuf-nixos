@@ -16,6 +16,7 @@
       ./aiagent.nix
       ./vscode.nix
       ./labtjkt.nix
+      ./virtualisations.nix
     ];
 
   # flakes
@@ -185,43 +186,16 @@
      pulse.enable = true;
   };
 
-  # docker virtualizations
-  virtualisation.docker = {
-	enable = true;
-	enableOnBoot = true;
-  };
-  hardware.nvidia-container-toolkit.enable = true;
-
-  # qemukvm
-  virtualisation.libvirtd = {
-	enable = true;
-	qemu = {
-		runAsRoot = true;
-		verbatimConfig = ''
-			user = "kaco"
-			group = "libvirtd"
-			dynamic_ownership = 1
-		'';
-	};
-  };
-  # Fix for failed virt-secret-init-encryption service
-  systemd.services.virt-secret-init-encryption = {
-    enable = true;
-    serviceConfig.ExecStart = [ "" "${pkgs.coreutils}/bin/true" ];
-  };
-
-  programs.virt-manager.enable = true;
-  virtualisation.spiceUSBRedirection.enable = true;
-
   # Enable touchpad support
   services.libinput.enable = true;
+
 
   # Define a user account.
   users.users.kaco = {
      isNormalUser = true;
      shell = pkgs.zsh;
      description = "Kaco Jirris";
-     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "kvm" "ubridge" "gns3" "wireshark" "adbusers"]; 
+     extraGroups = [ "wheel" "networkmanager" "docker" "libvirtd" "kvm" "ubridge" "gns3" "wireshark" "adbusers" "vboxusers" ]; 
   };
   
   # Global Zsh activation
