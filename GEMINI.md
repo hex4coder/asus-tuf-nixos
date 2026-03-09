@@ -9,7 +9,7 @@ This repository contains a modular NixOS configuration managed via Nix Flakes, s
 - **Core Desktop Environment:** 
   - **Window Manager:** [Niri](https://github.com/YaLTeR/niri) (Scrollable tiling Wayland compositor).
   - **Shell:** [Dank Material Shell (DMS)](https://github.com/AvengeMedia/DankMaterialShell).
-- **Main Technologies:** NixOS (Unstable), Wayland, NVIDIA (Proprietary), Docker, QEMU/KVM.
+- **Main Technologies:** NixOS (Unstable), Wayland, NVIDIA (Proprietary), Docker, QEMU/KVM, VirtualBox KVM.
 
 ## Directory Structure
 
@@ -65,7 +65,8 @@ The configuration defines several aliases for Git and system management (Zsh is 
 - **SSD Optimization:** `services.fstrim.enable = true` is active for periodic drive maintenance.
 - **Firmware Management:** `fwupd` is enabled. Use `fwupdmgr refresh && fwupdmgr get-updates` to check for hardware firmware updates (BIOS, SSD, etc).
 - **Power Management:** Configured for ASUS laptops; Bluetooth is disabled by default on boot.
-- **Virtualization:** Docker (with NVIDIA support) and Libvirtd (KVM/QEMU) are enabled for user `kaco`.
+- **Virtualization:** Docker (with NVIDIA support), Libvirtd (KVM/QEMU), and VirtualBox KVM are enabled for user `kaco` (managed via `virtualisations.nix`).
+  - **VirtualBox:** Uses the `virtualboxKvm` package for compatibility with other KVM-based tools.
   - **Fix for libvirtd:** `virt-secret-init-encryption.service` is overridden to succeed using `${pkgs.coreutils}/bin/true`.
   - **Permissions:** `dynamic_ownership = 1` is enabled in `qemu.conf` to allow access to VM images in `/var/lib/libvirt/images/`.
   - **Manual Step:** If `libvirtd` fails to start, ensure `/var/lib/libvirt/secrets/secrets-encryption-key` exists (can be created manually with `systemd-creds encrypt`).
@@ -74,5 +75,6 @@ The configuration defines several aliases for Git and system management (Zsh is 
 
 1. **Modularity:** New system-level services should be placed in separate `.nix` files and added to the `imports` list in `configuration.nix`.
 2. **Impure Flakes:** The system currently requires the `--impure` flag for rebuilds due to specific configuration requirements (likely hardware-related paths).
-3. **Unfree Software:** Enabled via `nixpkgs.config.allowUnfree = true`.
-4. **State Version:** The system is tracking state version `25.11`.
+3. **Kernel Stability:** The system is pinned to `pkgs.linuxPackages_6_12` (LTS) to ensure compatibility with VirtualBox kernel modules.
+4. **Unfree Software:** Enabled via `nixpkgs.config.allowUnfree = true`.
+5. **State Version:** The system is tracking state version `25.11`.
