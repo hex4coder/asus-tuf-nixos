@@ -43,9 +43,11 @@
   # Plymouth boot screen
   boot.plymouth = {
     enable = true;
-    theme = "circle_hud";
-    themePackages = with pkgs; [
-      adi1090x-plymouth-themes
+    theme = "rog";
+    themePackages = [
+      (pkgs.adi1090x-plymouth-themes.override {
+        selected_themes = [ "rog" ];
+      })
     ];
   };
 
