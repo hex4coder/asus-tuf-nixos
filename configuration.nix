@@ -39,6 +39,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 1;
   boot.kernelPackages = pkgs.linuxPackages_6_12;
+  boot.tmp.useTmpfs = true;
+  boot.tmp.tmpfsSize = "50%";
 
   # Plymouth boot screen
   boot.plymouth = {
@@ -72,7 +74,7 @@
   boot.initrd.kernelModules = [ "amdgpu" "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
 
   # networking
-  networking.nameservers = [ "8.8.8.8" ];
+  networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
   networking.hostName = "nixos";
 
   services.dnsmasq.resolveLocalQueries = false;
@@ -201,7 +203,12 @@
   };
   
   # Global Zsh activation
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+  };
 
   # untuk kdenlive
   nixpkgs.overlays = [
@@ -260,6 +267,13 @@
      #apps
      tor-browser
      onlyoffice-desktopeditors
+
+     # modern cli tools
+     fastfetch
+     eza
+     fzf
+     bat
+     bottom
   ];
 
   programs.dconf.enable = true;
@@ -271,6 +285,7 @@
   };
   services.supergfxd.enable = true;
   services.asusd.enable = true;
+  systemd.services.asusd.postStart = "${pkgs.asusctl}/bin/asusctl battery limit 80";
 
   # 1. Aktifkan Hardware Bluetooth
   hardware.enableAllFirmware = true;
