@@ -210,6 +210,13 @@
     syntaxHighlighting.enable = true;
   };
 
+  # Modern Terminal Tools
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+  programs.starship.enable = true;
+
   # untuk kdenlive
   nixpkgs.overlays = [
     (self: super: {
