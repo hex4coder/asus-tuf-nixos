@@ -41,6 +41,11 @@
 	url = "github:nix-community/home-manager";
 	inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    browseros = {
+	url = "github:Hill-Brandon-M/browseros-ai";
+	inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, gns3-gui-src, gns3-server-src, ... } @ inputs: {

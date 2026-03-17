@@ -300,6 +300,7 @@
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
+     inputs.browseros.packages.${pkgs.stdenv.hostPlatform.system}.default
      wget
      neovim
      curl
