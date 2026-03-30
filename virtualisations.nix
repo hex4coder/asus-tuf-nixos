@@ -35,4 +35,9 @@
     enable = true;
     package = pkgs.virtualboxKvm;
   };
+
+  # for waydroid (run android apps)
+  virtualisation.waydroid = {
+	enable = true;
+  };
 }
