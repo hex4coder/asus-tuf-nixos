@@ -1,6 +1,6 @@
 # GEMINI.md - NixOS Dotfiles Context
 
-This repository contains a modular NixOS configuration managed via Nix Flakes, specifically optimized for ASUS TUF (FA506 series) laptops.
+This repository contains a modular NixOS configuration managed via Nix Flakes, specifically optimized for ASUS TUF (FA506 series) laptops with AMD/NVIDIA hybrid graphics.
 
 ## Project Overview
 
@@ -14,11 +14,15 @@ This repository contains a modular NixOS configuration managed via Nix Flakes, s
 ## Directory Structure
 
 - `flake.nix`: Entry point for the configuration, managing dependencies (inputs) and system outputs.
-- `configuration.nix`: Main system configuration file importing various modules and defining core system settings (users, bootloader, hardware drivers).
+- `configuration.nix`: Main system configuration file importing various modules and defining core system settings.
+- `home.nix`: Home Manager configuration for user `kaco`.
 - `network.nix`: Networking configuration, including DNS and NetworkManager settings.
 - `samba.nix`: File sharing configuration using Samba.
-- `gns3.nix`: Configuration for GNS3 network simulation environment.
-- `ollama.nix` & `aiagent.nix`: Configurations for local AI services (Ollama, AI agents).
+- `labtjkt.nix`: Lab TJKT tools (GNS3, Wireshark, Winbox, etc.) for networking & troubleshooting.
+- `aiagent.nix`: Configurations for local AI services (currently `gemini-cli`).
+- `virtualisations.nix`: Virtualization settings (Docker, Libvirtd, VirtualBox).
+- `vscode.nix`: Visual Studio Code installation.
+- `android-devs.nix`: Android development tools (imported in `home.nix`).
 
 ## Key Commands & Operations
 
@@ -35,21 +39,19 @@ This repository contains a modular NixOS configuration managed via Nix Flakes, s
   ```bash
   sudo nixos-rebuild switch --impure --flake . --upgrade
   ```
-- **Automated Cleaning (NH):** System generations are managed by `nh clean`, keeping the last 5 generations and those from the last 3 days.
-- **Garbage Collection:** Legacy Nix GC is disabled in favor of `nh` automated cleaning.
+- **Full Update Loop (`n-up`):** `git pull` -> `nix flake update` -> `nos` -> `git commit` -> `git push`.
 
 ### Application Launcher (Fuzzel)
 - **Primary Launcher:** Fuzzel is configured as the main Wayland launcher.
-- **Configuration:** Located in `./fuzzel/fuzzel.ini`, managed via Home Manager.
-- **Theme:** Dark mode (Tokyo Night style) with JetBrainsMono Nerd Font (size 10).
+- **Configuration:** Managed via Home Manager link to `./fuzzel/`.
 
 ### Theme Management
 - **Switch to Dark Mode:** `set-dark`
 - **Switch to Light Mode:** `set-light`
-> Note: These commands sync GTK settings with DMS via `gsettings`.
+> Note: These commands sync GTK settings and DMS colors via `gsettings`.
 
 ### Git & Shell Workflow (Aliases)
-The configuration defines several aliases for Git and system management (Zsh is the preferred shell):
+Zsh is the preferred shell with several aliases:
 - `gs`: `git status`
 - `gaa`: `git add --all`
 - `gc`: `git commit -am`
@@ -57,24 +59,23 @@ The configuration defines several aliases for Git and system management (Zsh is 
 - `gl`: `git pull`
 - `nos`: `nh os switch . -- --impure` (Primary rebuild command)
 
+## AI & Agentic Workflows
+
+- **Gemini CLI:** Installed via `aiagent.nix`.
+- **BrowserOS (Planned/Research):** A Chromium-based AI-native browser for agentic workflows. Can be integrated via flakes (e.g., `github:Hill-Brandon-M/browseros-ai`).
+- **Local AI:** Support for Ollama and MCP (Model Context Protocol) is a key area of development for this setup.
+
 ## Hardware & System Specifics
 
-- **Graphics:** NVIDIA proprietary drivers are enabled with Wayland optimizations (`nvidia_drm.modeset=1`). 
-  - **Hybrid Boot Fix:** `amdgpu` is included in `boot.initrd.kernelModules` to ensure smooth display initialization.
-- **ASUS Support:** `asusctl`, `supergfxd`, and `rog-control-center` are integrated for hardware control.
-- **SSD Optimization:** `services.fstrim.enable = true` is active for periodic drive maintenance.
-- **Firmware Management:** `fwupd` is enabled. Use `fwupdmgr refresh && fwupdmgr get-updates` to check for hardware firmware updates (BIOS, SSD, etc).
-- **Power Management:** Configured for ASUS laptops; Bluetooth is disabled by default on boot.
-- **Virtualization:** Docker (with NVIDIA support), Libvirtd (KVM/QEMU), and VirtualBox KVM are enabled for user `kaco` (managed via `virtualisations.nix`).
-  - **VirtualBox:** Uses the `virtualboxKvm` package for compatibility with other KVM-based tools.
-  - **Fix for libvirtd:** `virt-secret-init-encryption.service` is overridden to succeed using `${pkgs.coreutils}/bin/true`.
-  - **Permissions:** `dynamic_ownership = 1` is enabled in `qemu.conf` to allow access to VM images in `/var/lib/libvirt/images/`.
-  - **Manual Step:** If `libvirtd` fails to start, ensure `/var/lib/libvirt/secrets/secrets-encryption-key` exists (can be created manually with `systemd-creds encrypt`).
+- **Graphics:** NVIDIA proprietary drivers with Wayland optimizations (`nvidia_drm.modeset=1`).
+  - **Hybrid Boot Fix:** `amdgpu` and `nvidia` modules are included in `boot.initrd.kernelModules`.
+- **ASUS Support:** `asusctl`, `supergfxd`, and `rog-control-center` are integrated.
+- **Power Management:** ASUS battery limit set to 80% via `asusd`.
+- **Virtualization:** Docker (with NVIDIA support), Libvirtd (KVM/QEMU), and VirtualBox KVM are enabled for user `kaco`.
 
 ## Development Conventions
 
-1. **Modularity:** New system-level services should be placed in separate `.nix` files and added to the `imports` list in `configuration.nix`.
-2. **Impure Flakes:** The system currently requires the `--impure` flag for rebuilds due to specific configuration requirements (likely hardware-related paths).
-3. **Kernel Stability:** The system is pinned to `pkgs.linuxPackages_6_12` (LTS) to ensure compatibility with VirtualBox kernel modules.
-4. **Unfree Software:** Enabled via `nixpkgs.config.allowUnfree = true`.
-5. **State Version:** The system is tracking state version `25.11`.
+1. **Modularity:** System-level services go in separate `.nix` files imported in `configuration.nix`.
+2. **Impure Flakes:** Rebuilds require `--impure` due to local path dependencies and hardware specificities.
+3. **Kernel:** Pinned to `pkgs.linuxPackages_6_12` (LTS) for stability with VirtualBox.
+4. **State Version:** Tracking state version `25.11`.

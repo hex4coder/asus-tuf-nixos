@@ -36,6 +36,9 @@
     bat
     nh
     yt-dlp
+
+    # pdf document viewer
+    zathura
     
     # Fonts
     inter
