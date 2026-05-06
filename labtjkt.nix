@@ -82,6 +82,6 @@ in
 
   # Ventoy insecure package permission
   nixpkgs.config.permittedInsecurePackages = [
-    "ventoy-1.1.10"
+    "ventoy-1.1.12"
   ];
 }
