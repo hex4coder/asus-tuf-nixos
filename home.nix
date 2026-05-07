@@ -23,6 +23,7 @@
     unzip
     zoom-us
     btop
+    wooz
 
     # DKV
     gimp
