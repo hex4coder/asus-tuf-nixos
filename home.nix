@@ -117,6 +117,7 @@
       name = "adw-gtk3-dark";
       package = pkgs.adw-gtk3;
     };
+    gtk4.theme = config.gtk.theme;
     iconTheme = {
       name = "Tela-orange-dark";
       package = pkgs.tela-icon-theme;
