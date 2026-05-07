@@ -30,6 +30,7 @@
     krita
     inkscape
     audacity
+    kdenlive
 
     # Modern CLI (Rust-based)
     fd

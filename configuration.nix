@@ -278,8 +278,8 @@
   # untuk kdenlive
   nixpkgs.overlays = [
     (self: super: {
-      kdenlive = super.kdenlive.overrideAttrs (oldAttrs: {
-        buildInputs = oldAttrs.buildInputs ++ [ self.shaderc ];
+      kdenlive = super.kdePackages.kdenlive.overrideAttrs (oldAttrs: {
+        buildInputs = (oldAttrs.buildInputs or []) ++ [ self.shaderc ];
       });
     })
   ];
