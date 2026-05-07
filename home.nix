@@ -24,6 +24,7 @@
     zoom-us
     btop
     wooz
+    wf-recorder
 
     # DKV
     gimp
