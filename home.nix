@@ -25,6 +25,8 @@
     btop
     wooz
     wf-recorder
+    slurp
+    mpv
 
     # DKV
     gimp
