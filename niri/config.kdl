@@ -66,6 +66,15 @@ binds {
     Mod+Ctrl+Up    { move-window-up; }
     Mod+Ctrl+Right { move-column-right; }
 
+    Mod+Shift+Left  { move-column-to-monitor-left; }
+    Mod+Shift+Down  { move-column-to-monitor-down; }
+    Mod+Shift+Up    { move-column-to-monitor-up; }
+    Mod+Shift+Right { move-column-to-monitor-right; }
+    Mod+Shift+H     { move-column-to-monitor-left; }
+    Mod+Shift+J     { move-column-to-monitor-down; }
+    Mod+Shift+K     { move-column-to-monitor-up; }
+    Mod+Shift+L     { move-column-to-monitor-right; }
+
     // Workspaces
     Mod+1 { focus-workspace 1; }
     Mod+2 { focus-workspace 2; }
@@ -95,6 +104,16 @@ binds {
     Mod+Shift+E { quit; }
     Print { screenshot; }
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+    // --- TEACHING ZOOM (wl-mirror) ---
+    // Jalankan ini sekali saat mulai mengajar (Persiapan)
+    Mod+Shift+P { spawn "sh" "$HOME/dotfiles/scripts/start-zoom.sh"; }
+
+    // ZOOM IN: Ambil area baru (Update ke proyektor tanpa kedip)
+    Mod+Z { spawn "sh" "-c" "echo \"-r '$(slurp)'\" > /tmp/zoom-pipe"; }
+
+    // ZOOM OUT: Kembali ke layar penuh
+    Mod+0 { spawn "sh" "-c" "echo '--no-region' > /tmp/zoom-pipe"; }
 }
 
 // --- DMS MODULES (The Visuals) ---
