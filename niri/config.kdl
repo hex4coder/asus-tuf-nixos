@@ -90,6 +90,9 @@ binds {
     Mod+Ctrl+2 { move-column-to-workspace 2; }
     Mod+Ctrl+3 { move-column-to-workspace 3; }
 
+    Mod+Ctrl+Shift+Up   { move-column-to-workspace-up; }
+    Mod+Ctrl+Shift+Down { move-column-to-workspace-down; }
+
     // Layout Management
     Mod+R { switch-preset-column-width; }
     Mod+Shift+R { switch-preset-window-height; }

@@ -37,7 +37,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.timeout = 1;
+  boot.loader.timeout = 2;
   boot.kernelPackages = pkgs.linuxPackages_6_12;
   boot.tmp.useTmpfs = true;
   boot.tmp.tmpfsSize = "50%";
@@ -55,6 +55,7 @@
 
   boot.consoleLogLevel = 0;
   boot.initrd.verbose = false;
+  boot.initrd.systemd.enable = true;
   boot.kernelParams = [
 	"nvidia_drm.modeset=1"
 	"nvidia_drm.fbdev=1"
